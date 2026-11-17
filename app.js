@@ -367,8 +367,8 @@ function gameInstruction(question) {
 function readGameInstruction() {
   if (!game || game.complete) return;
   const question = game.questions[game.index];
-  speakFrench(gameInstruction(question));
-  if (game.mode === "listen") speakEnglishAfterCurrent(question.item.word);
+  speakFrench(game.mode === "reverse" ? "Que signifie ce mot en français ?" : gameInstruction(question));
+  if (game.mode === "listen" || game.mode === "reverse") speakEnglishAfterCurrent(question.item.word);
 }
 
 function renderGame() {
@@ -695,7 +695,7 @@ function handleAction(action, target) {
   if (action === "next-conversation") nextConversationTurn();
   if (action === "answer") selectAnswer(Number(target.dataset.answer));
   if (action === "validate-answer") validateAnswer();
-  if (action === "replay-instruction" && game) speakFrench(gameInstruction(game.questions[game.index]));
+  if (action === "replay-instruction" && game) readGameInstruction();
   if (action === "next-question") nextQuestion();
   if (action === "replay-word" && game) speak(game.questions[game.index].item.word);
   if (action === "open-parents") openParents();
