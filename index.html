@@ -1,69 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>English Adventure</title>
-
-<link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fff7ef">
+  <meta name="description" content="Une petite aventure amusante pour découvrir l'anglais en jouant.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>English Adventure</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <link rel="stylesheet" href="./style.css">
 </head>
-
 <body>
-
-<div class="container">
-
-    <h1>🦊 English Adventure</h1>
-
-    <p class="subtitle">
-        Apprenons l'anglais en jouant
-    </p>
-
-    <div class="menu">
-
-        <button class="big-button red"
-            onclick="location.href='#colors'">
-            🌈 Couleurs
-        </button>
-
-        <button class="big-button blue"
-            onclick="location.href='#animals'">
-            🐶 Animaux
-        </button>
-
-        <button class="big-button green">
-            🎮 Jeux
-        </button>
-
-        <button class="big-button yellow">
-            ⭐ Récompenses
-        </button>
-
-    </div>
-
-    <div id="colors">
-
-        <h2>🌈 Les couleurs</h2>
-
-        <div class="color-card red"
-            onclick="speak('Red')">Red</div>
-
-        <div class="color-card blue"
-            onclick="speak('Blue')">Blue</div>
-
-        <div class="color-card green"
-            onclick="speak('Green')">Green</div>
-
-        <div class="color-card yellow"
-            onclick="speak('Yellow')">Yellow</div>
-
-    </div>
-
-</div>
-
-<script src="app.js"></script>
-
+  <div id="app" class="app-shell">
+    <div class="loading-screen">🦊 Préparation de ton aventure…</div>
+  </div>
+  <script src="./app.js"></script>
 </body>
 </html>
