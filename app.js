@@ -81,6 +81,7 @@ const DEFAULT_STATE = {
   diamonds: 0,
   completedLessons: [],
   wordsLearned: [],
+  reviewWords: [],
   bestScore: 0,
   sessions: 0,
   parentPin: "2468",
@@ -95,7 +96,8 @@ function loadState() {
     delete migrated.stars;
     return Object.assign({}, DEFAULT_STATE, migrated, {
       completedLessons: Array.isArray(saved.completedLessons) ? saved.completedLessons : [],
-      wordsLearned: Array.isArray(saved.wordsLearned) ? saved.wordsLearned : []
+      wordsLearned: Array.isArray(saved.wordsLearned) ? saved.wordsLearned : [],
+      reviewWords: Array.isArray(saved.reviewWords) ? saved.reviewWords : []
     });
   } catch (error) {
     return Object.assign({}, DEFAULT_STATE);
@@ -588,7 +590,9 @@ function shuffle(list) {
 
 function startGame(mode, topic) {
   const pool = topic && LESSONS[topic] ? LESSONS[topic].words : ALL_WORDS;
-  const selected = shuffle(pool).slice(0, Math.min(6, pool.length));
+  const priority = pool.filter(function (item) { return state.reviewWords.includes(item.word); });
+  const remaining = shuffle(pool.filter(function (item) { return !state.reviewWords.includes(item.word); }));
+  const selected = priority.concat(remaining).slice(0, Math.min(6, pool.length));
   game = {
     mode: mode,
     topic: topic || null,
@@ -620,7 +624,13 @@ function validateAnswer() {
   const question = game.questions[game.index];
   game.answered = true;
   game.lastCorrect = question.options[game.selected].word === question.item.word;
-  if (game.lastCorrect) game.correct += 1;
+  if (game.lastCorrect) {
+    game.correct += 1;
+    state.reviewWords = state.reviewWords.filter(function (word) { return word !== question.item.word; });
+  } else if (!state.reviewWords.includes(question.item.word)) {
+    state.reviewWords.push(question.item.word);
+  }
+  saveState();
   render();
 }
 
