@@ -335,10 +335,36 @@ function wordCard(item) {
 
 function renderRewards() {
   const milestones = [
-    { count: 1, icon: "💎", title: "Premier diamant", note: "Tu as commencé ton aventure !" },
-    { count: 5, icon: "🦋", title: "Petite exploratrice", note: "5 diamants gagnés" },
-    { count: 10, icon: "🦄", title: "Super championne", note: "10 diamants gagnés" },
-    { count: 20, icon: "👑", title: "Reine de l'anglais", note: "20 diamants gagnés" }
+    {"count":15,"icon":"🦊","title":"Amie du renard","note":"15 diamants gagnés"},
+    {"count":25,"icon":"🌟","title":"Petite étoile","note":"25 diamants gagnés"},
+    {"count":35,"icon":"🐝","title":"Abeille travailleuse","note":"35 diamants gagnés"},
+    {"count":45,"icon":"🐬","title":"Championne des océans","note":"45 diamants gagnés"},
+    {"count":55,"icon":"🦋","title":"Papillon des mots","note":"55 diamants gagnés"},
+    {"count":65,"icon":"🦄","title":"Licorne magique","note":"65 diamants gagnés"},
+    {"count":75,"icon":"🌈","title":"Arc-en-ciel anglais","note":"75 diamants gagnés"},
+    {"count":85,"icon":"🐼","title":"Panda curieux","note":"85 diamants gagnés"},
+    {"count":95,"icon":"🧁","title":"Gourmande de mots","note":"95 diamants gagnés"},
+    {"count":105,"icon":"🚀","title":"Exploratrice de l'espace","note":"105 diamants gagnés"},
+    {"count":115,"icon":"🐢","title":"Persévérante","note":"115 diamants gagnés"},
+    {"count":125,"icon":"🎨","title":"Artiste des mots","note":"125 diamants gagnés"},
+    {"count":135,"icon":"🦉","title":"Hibou malin","note":"135 diamants gagnés"},
+    {"count":145,"icon":"🐠","title":"Poisson bilingue","note":"145 diamants gagnés"},
+    {"count":155,"icon":"🌺","title":"Fleur des langues","note":"155 diamants gagnés"},
+    {"count":165,"icon":"🏰","title":"Gardienne des mots","note":"165 diamants gagnés"},
+    {"count":175,"icon":"🧚","title":"Fée de l'anglais","note":"175 diamants gagnés"},
+    {"count":185,"icon":"🐧","title":"Pingouin courageux","note":"185 diamants gagnés"},
+    {"count":195,"icon":"🎈","title":"Étoile montante","note":"195 diamants gagnés"},
+    {"count":205,"icon":"🦁","title":"Lionne du vocabulaire","note":"205 diamants gagnés"},
+    {"count":215,"icon":"🍀","title":"Chanceuse des mots","note":"215 diamants gagnés"},
+    {"count":225,"icon":"🛼","title":"Reine de la glisse","note":"225 diamants gagnés"},
+    {"count":235,"icon":"🐙","title":"Pieuvre futée","note":"235 diamants gagnés"},
+    {"count":245,"icon":"🎀","title":"Super bavarde","note":"245 diamants gagnés"},
+    {"count":255,"icon":"🌻","title":"Soleil de l'anglais","note":"255 diamants gagnés"},
+    {"count":265,"icon":"🦜","title":"Perroquet champion","note":"265 diamants gagnés"},
+    {"count":275,"icon":"🏅","title":"Grande championne","note":"275 diamants gagnés"},
+    {"count":285,"icon":"💫","title":"Super exploratrice","note":"285 diamants gagnés"},
+    {"count":295,"icon":"👸","title":"Princesse bilingue","note":"295 diamants gagnés"},
+    {"count":300,"icon":"🏆","title":"Légende de l'anglais","note":"300 diamants gagnés"}
   ];
   return '<section class="page-intro"><span class="eyebrow">BRAVO À TOI !</span><h1>Mes récompenses 🏆</h1><p>Chaque bonne réponse te rapproche d\'une nouvelle récompense.</p></section>' +
     '<div class="diamond-total"><span>💎</span><strong>' + state.diamonds + '</strong><small>diamants gagnés</small></div>' +
