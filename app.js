@@ -50,7 +50,27 @@ const LESSONS = {
   ]},
   clothes: { title: "Les vêtements", subtitle: "Habille-toi et apprends les mots !", icon: "👕", words: [
     {word:"T-shirt",fr:"tee-shirt",emoji:"👕"},{word:"Shoes",fr:"chaussures",emoji:"👟"},{word:"Hat",fr:"chapeau",emoji:"🧢"},{word:"Dress",fr:"robe",emoji:"👗"},{word:"Coat",fr:"manteau",emoji:"🧥"},{word:"Socks",fr:"chaussettes",emoji:"🧦"}
-  ]}
+  ]},
+  toys:{title:"Les jouets",subtitle:"Découvre les jouets en anglais !",icon:"🧸",words:[{"word":"Teddy bear","fr":"ours en peluche","emoji":"🧸"},{"word":"Doll","fr":"poupée","emoji":"🪆"},{"word":"Ball","fr":"ballon","emoji":"⚽"},{"word":"Kite","fr":"cerf-volant","emoji":"🪁"},{"word":"Puzzle","fr":"puzzle","emoji":"🧩"},{"word":"Train","fr":"train","emoji":"🚂"}]},
+  transport:{title:"Les transports",subtitle:"Découvre les transports en anglais !",icon:"🚗",words:[{"word":"Car","fr":"voiture","emoji":"🚗"},{"word":"Bus","fr":"bus","emoji":"🚌"},{"word":"Bicycle","fr":"vélo","emoji":"🚲"},{"word":"Boat","fr":"bateau","emoji":"⛵"},{"word":"Airplane","fr":"avion","emoji":"✈️"},{"word":"Taxi","fr":"taxi","emoji":"🚕"}]},
+  rooms:{title:"Les pièces de la maison",subtitle:"Découvre les pièces de la maison en anglais !",icon:"🏡",words:[{"word":"Bedroom","fr":"chambre","emoji":"🛏️"},{"word":"Bathroom","fr":"salle de bain","emoji":"🛁"},{"word":"Kitchen","fr":"cuisine","emoji":"🍳"},{"word":"Living room","fr":"salon","emoji":"🛋️"},{"word":"Garden","fr":"jardin","emoji":"🌳"},{"word":"Hall","fr":"entrée","emoji":"🚪"}]},
+  furniture:{title:"Les meubles",subtitle:"Découvre les meubles en anglais !",icon:"🪑",words:[{"word":"Chair","fr":"chaise","emoji":"🪑"},{"word":"Table","fr":"table","emoji":"🪵"},{"word":"Bed","fr":"lit","emoji":"🛏️"},{"word":"Sofa","fr":"canapé","emoji":"🛋️"},{"word":"Lamp","fr":"lampe","emoji":"💡"},{"word":"Door","fr":"porte","emoji":"🚪"}]},
+  nature:{title:"La nature",subtitle:"Découvre la nature en anglais !",icon:"🌳",words:[{"word":"Tree","fr":"arbre","emoji":"🌳"},{"word":"Flower","fr":"fleur","emoji":"🌸"},{"word":"River","fr":"rivière","emoji":"🏞️"},{"word":"Mountain","fr":"montagne","emoji":"⛰️"},{"word":"Grass","fr":"herbe","emoji":"🌱"},{"word":"Leaf","fr":"feuille","emoji":"🍃"}]},
+  ocean:{title:"Les animaux de la mer",subtitle:"Découvre les animaux de la mer en anglais !",icon:"🐬",words:[{"word":"Dolphin","fr":"dauphin","emoji":"🐬"},{"word":"Shark","fr":"requin","emoji":"🦈"},{"word":"Whale","fr":"baleine","emoji":"🐳"},{"word":"Octopus","fr":"pieuvre","emoji":"🐙"},{"word":"Turtle","fr":"tortue","emoji":"🐢"},{"word":"Crab","fr":"crabe","emoji":"🦀"}]},
+  farm:{title:"À la ferme",subtitle:"Découvre à la ferme en anglais !",icon:"🚜",words:[{"word":"Cow","fr":"vache","emoji":"🐮"},{"word":"Pig","fr":"cochon","emoji":"🐷"},{"word":"Sheep","fr":"mouton","emoji":"🐑"},{"word":"Horse","fr":"cheval","emoji":"🐴"},{"word":"Duck","fr":"canard","emoji":"🦆"},{"word":"Chicken","fr":"poule","emoji":"🐔"}]},
+  insects:{title:"Les petites bêtes",subtitle:"Découvre les petites bêtes en anglais !",icon:"🦋",words:[{"word":"Butterfly","fr":"papillon","emoji":"🦋"},{"word":"Bee","fr":"abeille","emoji":"🐝"},{"word":"Ladybird","fr":"coccinelle","emoji":"🐞"},{"word":"Ant","fr":"fourmi","emoji":"🐜"},{"word":"Spider","fr":"araignée","emoji":"🕷️"},{"word":"Caterpillar","fr":"chenille","emoji":"🐛"}]},
+  jobs:{title:"Les métiers",subtitle:"Découvre les métiers en anglais !",icon:"👩‍🚒",words:[{"word":"Teacher","fr":"professeur","emoji":"👩‍🏫"},{"word":"Doctor","fr":"médecin","emoji":"🧑‍⚕️"},{"word":"Firefighter","fr":"pompier","emoji":"👩‍🚒"},{"word":"Cook","fr":"cuisinier","emoji":"👨‍🍳"},{"word":"Farmer","fr":"agriculteur","emoji":"🧑‍🌾"},{"word":"Pilot","fr":"pilote","emoji":"👩‍✈️"}]},
+  sports:{title:"Les sports",subtitle:"Découvre les sports en anglais !",icon:"🏅",words:[{"word":"Football","fr":"football","emoji":"⚽"},{"word":"Tennis","fr":"tennis","emoji":"🎾"},{"word":"Swimming","fr":"natation","emoji":"🏊"},{"word":"Running","fr":"course","emoji":"🏃"},{"word":"Cycling","fr":"vélo","emoji":"🚴"},{"word":"Dancing","fr":"danse","emoji":"💃"}]},
+  actions:{title:"Les actions",subtitle:"Découvre les actions en anglais !",icon:"🤸",words:[{"word":"Run","fr":"courir","emoji":"🏃"},{"word":"Jump","fr":"sauter","emoji":"🤾"},{"word":"Eat","fr":"manger","emoji":"🍽️"},{"word":"Drink","fr":"boire","emoji":"🥤"},{"word":"Sleep","fr":"dormir","emoji":"😴"},{"word":"Read","fr":"lire","emoji":"📖"}]},
+  feelings:{title:"Les émotions",subtitle:"Découvre les émotions en anglais !",icon:"😊",words:[{"word":"Happy","fr":"heureux","emoji":"😄"},{"word":"Sad","fr":"triste","emoji":"😢"},{"word":"Angry","fr":"en colère","emoji":"😠"},{"word":"Tired","fr":"fatigué","emoji":"🥱"},{"word":"Scared","fr":"effrayé","emoji":"😨"},{"word":"Excited","fr":"tout excité","emoji":"🤩"}]},
+  weekdays:{title:"Les jours de la semaine",subtitle:"Découvre les jours de la semaine en anglais !",icon:"📅",words:[{"word":"Monday","fr":"lundi","emoji":"1️⃣"},{"word":"Tuesday","fr":"mardi","emoji":"2️⃣"},{"word":"Wednesday","fr":"mercredi","emoji":"3️⃣"},{"word":"Thursday","fr":"jeudi","emoji":"4️⃣"},{"word":"Friday","fr":"vendredi","emoji":"5️⃣"},{"word":"Saturday","fr":"samedi","emoji":"6️⃣"}]},
+  months:{title:"Les mois",subtitle:"Découvre les mois en anglais !",icon:"🗓️",words:[{"word":"January","fr":"janvier","emoji":"❄️"},{"word":"February","fr":"février","emoji":"💗"},{"word":"March","fr":"mars","emoji":"🌱"},{"word":"April","fr":"avril","emoji":"🌦️"},{"word":"May","fr":"mai","emoji":"🌼"},{"word":"June","fr":"juin","emoji":"☀️"}]},
+  seasons:{title:"Les saisons",subtitle:"Découvre les saisons en anglais !",icon:"🍂",words:[{"word":"Spring","fr":"printemps","emoji":"🌷"},{"word":"Summer","fr":"été","emoji":"🏖️"},{"word":"Autumn","fr":"automne","emoji":"🍁"},{"word":"Winter","fr":"hiver","emoji":"⛄"},{"word":"Hot","fr":"chaud","emoji":"🥵"},{"word":"Cold","fr":"froid","emoji":"🥶"}]},
+  shapes:{title:"Les formes",subtitle:"Découvre les formes en anglais !",icon:"🔺",words:[{"word":"Circle","fr":"cercle","emoji":"⚪"},{"word":"Square","fr":"carré","emoji":"🟦"},{"word":"Triangle","fr":"triangle","emoji":"🔺"},{"word":"Star","fr":"étoile","emoji":"⭐"},{"word":"Heart","fr":"cœur","emoji":"❤️"},{"word":"Rectangle","fr":"rectangle","emoji":"▭"}]},
+  places:{title:"Les lieux en ville",subtitle:"Découvre les lieux en ville en anglais !",icon:"🏙️",words:[{"word":"Park","fr":"parc","emoji":"🌳"},{"word":"School","fr":"école","emoji":"🏫"},{"word":"Shop","fr":"magasin","emoji":"🏪"},{"word":"Hospital","fr":"hôpital","emoji":"🏥"},{"word":"Station","fr":"gare","emoji":"🚉"},{"word":"Playground","fr":"aire de jeux","emoji":"🛝"}]},
+  kitchen:{title:"Dans la cuisine",subtitle:"Découvre dans la cuisine en anglais !",icon:"🍴",words:[{"word":"Plate","fr":"assiette","emoji":"🍽️"},{"word":"Cup","fr":"tasse","emoji":"☕"},{"word":"Spoon","fr":"cuillère","emoji":"🥄"},{"word":"Fork","fr":"fourchette","emoji":"🍴"},{"word":"Knife","fr":"couteau","emoji":"🔪"},{"word":"Pan","fr":"poêle","emoji":"🍳"}]},
+  breakfast:{title:"Le petit-déjeuner",subtitle:"Découvre le petit-déjeuner en anglais !",icon:"🥣",words:[{"word":"Cereal","fr":"céréales","emoji":"🥣"},{"word":"Toast","fr":"pain grillé","emoji":"🍞"},{"word":"Butter","fr":"beurre","emoji":"🧈"},{"word":"Jam","fr":"confiture","emoji":"🍓"},{"word":"Juice","fr":"jus","emoji":"🧃"},{"word":"Yogurt","fr":"yaourt","emoji":"🥛"}]},
+  opposites:{title:"Les contraires",subtitle:"Découvre les contraires en anglais !",icon:"↔️",words:[{"word":"Big","fr":"grand","emoji":"🐘"},{"word":"Small","fr":"petit","emoji":"🐭"},{"word":"Fast","fr":"rapide","emoji":"🐆"},{"word":"Slow","fr":"lent","emoji":"🐢"},{"word":"Up","fr":"en haut","emoji":"⬆️"},{"word":"Down","fr":"en bas","emoji":"⬇️"}]}
 };
 
 const ALL_WORDS = Object.keys(LESSONS).flatMap(function (key) {
@@ -60,10 +80,12 @@ const ALL_WORDS = Object.keys(LESSONS).flatMap(function (key) {
 const DEFAULT_STATE = {
   diamonds: 0,
   completedLessons: [],
+  completedGames: [],
   wordsLearned: [],
+  reviewWords: [],
   bestScore: 0,
   sessions: 0,
-  parentPin: "2468",
+  parentPin: "1612",
   soundEnabled: true
 };
 
@@ -71,11 +93,14 @@ function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
     const migrated = Object.assign({}, saved);
+    if (migrated.parentPin === "2468") migrated.parentPin = "1612";
     if (typeof migrated.diamonds !== "number") migrated.diamonds = Number(migrated.stars) || 0;
     delete migrated.stars;
     return Object.assign({}, DEFAULT_STATE, migrated, {
       completedLessons: Array.isArray(saved.completedLessons) ? saved.completedLessons : [],
-      wordsLearned: Array.isArray(saved.wordsLearned) ? saved.wordsLearned : []
+      completedGames: Array.isArray(saved.completedGames) ? saved.completedGames : [],
+      wordsLearned: Array.isArray(saved.wordsLearned) ? saved.wordsLearned : [],
+      reviewWords: Array.isArray(saved.reviewWords) ? saved.reviewWords : []
     });
   } catch (error) {
     return Object.assign({}, DEFAULT_STATE);
@@ -215,8 +240,15 @@ function showToast(message) {
   }, 2600);
 }
 
+function completedLessonCount() {
+  const lessonKeys = Object.keys(LESSONS);
+  return new Set(state.completedLessons.filter(function (key) {
+    return lessonKeys.includes(key);
+  })).size;
+}
+
 function progressPercent() {
-  return Math.min(100, Math.round((state.completedLessons.length / Object.keys(LESSONS).length) * 100));
+  return Math.round((completedLessonCount() / Object.keys(LESSONS).length) * 100);
 }
 
 function renderHome() {
@@ -235,12 +267,12 @@ function renderHome() {
     '</section>' +
     '<section class="quick-stats">' +
     '<div class="stat-card"><span class="stat-icon">💎</span><strong>' + state.diamonds + '</strong><small>diamants</small></div>' +
-    '<div class="stat-card"><span class="stat-icon">📚</span><strong>' + state.completedLessons.length + '/' + Object.keys(LESSONS).length + '</strong><small>leçons terminées</small></div>' +
+    '<div class="stat-card"><span class="stat-icon">📚</span><strong>' + completedLessonCount() + '/' + Object.keys(LESSONS).length + '</strong><small>leçons terminées</small></div>' +
     '<div class="stat-card"><span class="stat-icon">🗣️</span><strong>' + state.wordsLearned.length + '</strong><small>mots découverts</small></div>' +
     '</section>' +
-    '<section class="progress-panel"><div class="progress-title"><strong>Mon aventure</strong><span>' + progressPercent() + '%</span></div>' +
+    '<section class="progress-panel"><div class="progress-title"><strong>Mes leçons</strong><span>' + progressPercent() + '%</span></div>' +
     '<div class="progress-track"><span style="width:' + progressPercent() + '%"></span></div>' +
-    '<p>Chaque mot appris te fait grandir. Bravo ! 💛</p></section>' +
+    '<p>' + completedLessonCount() + ' leçons terminées sur ' + Object.keys(LESSONS).length + '. Continue comme ça ! 💛</p></section>' +
     (deferredInstallPrompt ? '<button class="install-button" data-action="install">📲 Installer sur cette tablette</button>' : '');
 }
 function renderLearn() {
@@ -274,11 +306,31 @@ function renderPlay() {
     ["numbers","🔢","Les chiffres malins","quiz"],["fruits","🍓","Le panier de fruits","listen"],
     ["family","👨‍👩‍👧","La famille en anglais","quiz"],["body","🧍","Le corps en action","listen"],
     ["food","🥪","Le menu gourmand","quiz"],["school","🎒","Le cartable magique","listen"],
-    ["weather","🌦️","La météo rigolote","quiz"],["clothes","👕","Le dressing anglais","listen"]
+    ["weather","🌦️","La météo rigolote","quiz"],["clothes","👕","Le dressing anglais","listen"],
+    ["toys","🧸","Le coffre à jouets","quiz"],
+    ["transport","🚗","Le voyage des mots","listen"],
+    ["rooms","🏡","La maison mystère","reverse"],
+    ["furniture","🪑","Qui suis-je ? Les meubles","listen"],
+    ["nature","🌳","L’exploratrice de la nature","quiz"],
+    ["ocean","🐬","Plongée sous-marine","listen"],
+    ["farm","🚜","La ferme en folie","reverse"],
+    ["insects","🦋","Les petites bêtes","listen"],
+    ["jobs","👩‍🚒","Qui fait ce métier ?","reverse"],
+    ["sports","🏅","Le défi des sportifs","listen"],
+    ["actions","🤸","Mime et devine","quiz"],
+    ["feelings","😊","Le miroir des émotions","listen"],
+    ["weekdays","📅","Le calendrier magique","reverse"],
+    ["months","🗓️","Les mois de l’année","listen"],
+    ["seasons","🍂","Les quatre saisons","quiz"],
+    ["shapes","🔺","La chasse aux formes","listen"],
+    ["places","🏙️","La balade en ville","reverse"],
+    ["kitchen","🍴","À la bonne place","listen"],
+    ["breakfast","🥣","Le petit-déjeuner parfait","reverse"],
+    ["opposites","↔️","Le jeu des contraires","listen"]
   ];
-  return '<section class="page-intro"><span class="eyebrow">À TOI DE JOUER</span><h1>10 petits jeux 🧩</h1><p>Choisis ton défi : chaque jeu te fait réviser un thème différent !</p></section>' +
-    games.map(function(item){return '<button class="game-mode-card '+(item[3]==="listen"?"listen-mode":"quiz-mode")+'" data-action="start-game" data-mode="'+item[3]+'" data-topic="'+item[0]+'"><span class="mode-icon">'+item[1]+'</span><span><strong>'+item[2]+'</strong><small>'+(item[3]==="listen"?"Écoute le mot et trouve la bonne réponse.":"Trouve le mot anglais correspondant.")+'</small></span><span class="mode-arrow">→</span></button>';}).join("") +
-    '<button class="game-mode-card conversation-mode" data-action="conversation-menu"><span class="mode-icon">💬</span><span><strong>Les conversations</strong><small>Parle avec le renard dans 10 situations différentes.</small></span><span class="mode-arrow">→</span></button>' +
+  return '<section class="page-intro"><span class="eyebrow">À TOI DE JOUER</span><h1>30 petits jeux 🧩</h1><p>Choisis ton défi : chaque jeu te fait réviser un thème différent !</p></section>' +
+    games.map(function(item){const done=state.completedGames.includes(item[0]);return '<button class="game-mode-card '+(item[3]==="listen"?"listen-mode":"quiz-mode")+'" data-action="start-game" data-mode="'+item[3]+'" data-topic="'+item[0]+'"><span class="mode-icon">'+item[1]+'</span><span><strong>'+item[2]+'</strong><small>'+(item[3]==="listen"?"Écoute le mot et trouve la bonne réponse.":item[3]==="reverse"?"Trouve le bon mot en français.":"Trouve le mot anglais correspondant.")+'</small></span><span class="game-status '+(done?"is-done":"is-new")+'">'+(done?"✓ Déjà fait":"À faire")+'</span></button>';}).join("") +
+    '<button class="game-mode-card conversation-mode" data-action="conversation-menu"><span class="mode-icon">💬</span><span><strong>Les conversations</strong><small>Parle avec le renard dans 30 situations différentes.</small></span><span class="mode-arrow">→</span></button>' +
     '<div class="tip-card">💎 <span>Chaque bonne réponse te rapporte un diamant. Amuse-toi bien !</span></div>' +
     '<div class="best-score">🏅 Ton meilleur score : <strong>' + state.bestScore + '/6</strong></div>';
 }
@@ -293,10 +345,40 @@ function wordCard(item) {
 
 function renderRewards() {
   const milestones = [
-    { count: 1, icon: "💎", title: "Premier diamant", note: "Tu as commencé ton aventure !" },
-    { count: 5, icon: "🦋", title: "Petite exploratrice", note: "5 diamants gagnés" },
-    { count: 10, icon: "🦄", title: "Super championne", note: "10 diamants gagnés" },
-    { count: 20, icon: "👑", title: "Reine de l'anglais", note: "20 diamants gagnés" }
+    {"count":1,"icon":"💎","title":"Premier diamant","note":"Tu as commencé ton aventure !"},
+    {"count":5,"icon":"🦋","title":"Petite exploratrice","note":"5 diamants gagnés"},
+    {"count":10,"icon":"🦄","title":"Super championne","note":"10 diamants gagnés"},
+    {"count":20,"icon":"👑","title":"Reine de l'anglais","note":"20 diamants gagnés"},
+    {"count":15,"icon":"🦊","title":"Amie du renard","note":"15 diamants gagnés"},
+    {"count":25,"icon":"🌟","title":"Petite étoile","note":"25 diamants gagnés"},
+    {"count":35,"icon":"🐝","title":"Abeille travailleuse","note":"35 diamants gagnés"},
+    {"count":45,"icon":"🐬","title":"Championne des océans","note":"45 diamants gagnés"},
+    {"count":55,"icon":"🦋","title":"Papillon des mots","note":"55 diamants gagnés"},
+    {"count":65,"icon":"🦄","title":"Licorne magique","note":"65 diamants gagnés"},
+    {"count":75,"icon":"🌈","title":"Arc-en-ciel anglais","note":"75 diamants gagnés"},
+    {"count":85,"icon":"🐼","title":"Panda curieux","note":"85 diamants gagnés"},
+    {"count":95,"icon":"🧁","title":"Gourmande de mots","note":"95 diamants gagnés"},
+    {"count":105,"icon":"🚀","title":"Exploratrice de l'espace","note":"105 diamants gagnés"},
+    {"count":115,"icon":"🐢","title":"Persévérante","note":"115 diamants gagnés"},
+    {"count":125,"icon":"🎨","title":"Artiste des mots","note":"125 diamants gagnés"},
+    {"count":135,"icon":"🦉","title":"Hibou malin","note":"135 diamants gagnés"},
+    {"count":145,"icon":"🐠","title":"Poisson bilingue","note":"145 diamants gagnés"},
+    {"count":155,"icon":"🌺","title":"Fleur des langues","note":"155 diamants gagnés"},
+    {"count":165,"icon":"🏰","title":"Gardienne des mots","note":"165 diamants gagnés"},
+    {"count":175,"icon":"🧚","title":"Fée de l'anglais","note":"175 diamants gagnés"},
+    {"count":185,"icon":"🐧","title":"Pingouin courageux","note":"185 diamants gagnés"},
+    {"count":195,"icon":"🎈","title":"Étoile montante","note":"195 diamants gagnés"},
+    {"count":205,"icon":"🦁","title":"Lionne du vocabulaire","note":"205 diamants gagnés"},
+    {"count":215,"icon":"🍀","title":"Chanceuse des mots","note":"215 diamants gagnés"},
+    {"count":225,"icon":"🛼","title":"Reine de la glisse","note":"225 diamants gagnés"},
+    {"count":235,"icon":"🐙","title":"Pieuvre futée","note":"235 diamants gagnés"},
+    {"count":245,"icon":"🎀","title":"Super bavarde","note":"245 diamants gagnés"},
+    {"count":255,"icon":"🌻","title":"Soleil de l'anglais","note":"255 diamants gagnés"},
+    {"count":265,"icon":"🦜","title":"Perroquet champion","note":"265 diamants gagnés"},
+    {"count":275,"icon":"🏅","title":"Grande championne","note":"275 diamants gagnés"},
+    {"count":285,"icon":"💫","title":"Super exploratrice","note":"285 diamants gagnés"},
+    {"count":295,"icon":"👸","title":"Princesse bilingue","note":"295 diamants gagnés"},
+    {"count":300,"icon":"🏆","title":"Légende de l'anglais","note":"300 diamants gagnés"}
   ];
   return '<section class="page-intro"><span class="eyebrow">BRAVO À TOI !</span><h1>Mes récompenses 🏆</h1><p>Chaque bonne réponse te rapproche d\'une nouvelle récompense.</p></section>' +
     '<div class="diamond-total"><span>💎</span><strong>' + state.diamonds + '</strong><small>diamants gagnés</small></div>' +
@@ -317,16 +399,16 @@ function renderParents() {
 }
 
 function gameInstruction(question) {
-  return game.mode === "quiz"
-    ? 'Comment dit-on « ' + question.item.fr + ' » en anglais ?'
-    : "Écoute le mot en anglais, puis choisis l'image qui correspond.";
+  if (game.mode === "quiz") return 'Comment dit-on « ' + question.item.fr + ' » en anglais ?';
+  if (game.mode === "reverse") return 'Que signifie « ' + question.item.word + ' » en français ?';
+  return "Écoute le mot en anglais, puis choisis la bonne image.";
 }
 
 function readGameInstruction() {
   if (!game || game.complete) return;
   const question = game.questions[game.index];
-  speakFrench(gameInstruction(question));
-  if (game.mode === "listen") speakEnglishAfterCurrent(question.item.word);
+  speakFrench(game.mode === "reverse" ? "Que signifie ce mot en français ?" : gameInstruction(question));
+  if (game.mode === "listen" || game.mode === "reverse") speakEnglishAfterCurrent(question.item.word);
 }
 
 function renderGame() {
@@ -370,7 +452,27 @@ const CONVERSATION_THEMES = {
   home:{title:"À la maison",icon:"🏠",turns:[{prompt:"Where do you live?",french:"Où habites-tu ?"},{prompt:"What's your favourite room?",french:"Quelle est ta pièce préférée ?"},{prompt:"Do you have a garden?",french:"As-tu un jardin ?"}]},
   weather:{title:"La météo",icon:"🌤️",turns:[{prompt:"What's the weather like today?",french:"Quel temps fait-il aujourd'hui ?"},{prompt:"Do you like the sun?",french:"Aimes-tu le soleil ?"},{prompt:"Do you like playing in the rain?",french:"Aimes-tu jouer sous la pluie ?"}]},
   colours:{title:"Mes couleurs",icon:"🎨",turns:[{prompt:"What's your favourite colour?",french:"Quelle est ta couleur préférée ?"},{prompt:"Can you see something red?",french:"Vois-tu quelque chose de rouge ?"},{prompt:"Do you like blue?",french:"Aimes-tu le bleu ?"}]},
-  day:{title:"Ma journée",icon:"🌞",turns:[{prompt:"When do you wake up?",french:"À quelle heure te réveilles-tu ?"},{prompt:"What do you eat for breakfast?",french:"Que manges-tu au petit-déjeuner ?"},{prompt:"Are you happy today?",french:"Es-tu contente aujourd'hui ?"}]}
+  day:{title:"Ma journée",icon:"🌞",turns:[{prompt:"When do you wake up?",french:"À quelle heure te réveilles-tu ?"},{prompt:"What do you eat for breakfast?",french:"Que manges-tu au petit-déjeuner ?"},{prompt:"Are you happy today?",french:"Es-tu contente aujourd'hui ?"}]},
+  park:{title:"Au parc",icon:"🌳",turns:[{"prompt":"Do you like the park?","french":"Aimes-tu le parc ?","reply":"Me too! I love playing outside."},{"prompt":"Can you see a tree?","french":"Vois-tu un arbre ?","reply":"Yes! Trees are beautiful."},{"prompt":"Do you want to play?","french":"Veux-tu jouer ?","reply":"Let's play together!"}]},
+  birthday:{title:"Mon anniversaire",icon:"🎂",turns:[{"prompt":"When is your birthday?","french":"Quand est ton anniversaire ?","reply":"Birthdays are so much fun!"},{"prompt":"How old are you?","french":"Quel âge as-tu ?","reply":"You are growing up!"},{"prompt":"Do you like birthday cake?","french":"Aimes-tu le gâteau d'anniversaire ?","reply":"Yummy! I love birthday cake!"}]},
+  restaurant:{title:"Au restaurant",icon:"🍽️",turns:[{"prompt":"Are you hungry?","french":"As-tu faim ?","reply":"Me too! Let's look at the menu."},{"prompt":"Would you like some water?","french":"Veux-tu de l'eau ?","reply":"Here you are. Enjoy!"},{"prompt":"Do you like pizza?","french":"Aimes-tu la pizza ?","reply":"Pizza is delicious!"}]},
+  shop:{title:"Dans un magasin",icon:"🛍️",turns:[{"prompt":"What would you like?","french":"Qu'aimerais-tu ?","reply":"Great choice! Let's find it."},{"prompt":"What colour do you want?","french":"Quelle couleur veux-tu ?","reply":"Lovely colour!"},{"prompt":"Are you happy with it?","french":"Cela te plaît-il ?","reply":"Wonderful! Have a nice day!"}]},
+  playground:{title:"À l'aire de jeux",icon:"🛝",turns:[{"prompt":"Do you like slides?","french":"Aimes-tu les toboggans ?","reply":"Slides are so much fun!"},{"prompt":"Can you climb?","french":"Sais-tu grimper ?","reply":"Wow! You are strong."},{"prompt":"Shall we play together?","french":"On joue ensemble ?","reply":"Yes! Let's have fun!"}]},
+  zoo:{title:"Au zoo",icon:"🦁",turns:[{"prompt":"What animal can you see?","french":"Quel animal vois-tu ?","reply":"Amazing! I love animals."},{"prompt":"Is the elephant big?","french":"L'éléphant est-il grand ?","reply":"Yes, elephants are huge!"},{"prompt":"What's your favourite animal?","french":"Quel est ton animal préféré ?","reply":"That's a lovely animal!"}]},
+  beach:{title:"À la plage",icon:"🏖️",turns:[{"prompt":"Do you like the beach?","french":"Aimes-tu la plage ?","reply":"Me too! I love the sea."},{"prompt":"Can you swim?","french":"Sais-tu nager ?","reply":"That's great! Splash, splash!"},{"prompt":"Do you want to build a sandcastle?","french":"Veux-tu faire un château de sable ?","reply":"Let's build a big one!"}]},
+  doctor:{title:"Chez le médecin",icon:"🩺",turns:[{"prompt":"How do you feel?","french":"Comment te sens-tu ?","reply":"Thank you for telling me."},{"prompt":"Does your tummy hurt?","french":"As-tu mal au ventre ?","reply":"I hope you feel better soon."},{"prompt":"Are you feeling better now?","french":"Te sens-tu mieux maintenant ?","reply":"Take care and get some rest!"}]},
+  bedtime:{title:"C'est l'heure de dormir",icon:"🌙",turns:[{"prompt":"Are you sleepy?","french":"As-tu sommeil ?","reply":"It's nearly bedtime!"},{"prompt":"Did you brush your teeth?","french":"T'es-tu brossé les dents ?","reply":"Well done! Clean teeth are important."},{"prompt":"Would you like a bedtime story?","french":"Veux-tu une histoire ?","reply":"Sweet dreams, little star!"}]},
+  morning:{title:"Le matin",icon:"🌞",turns:[{"prompt":"Did you sleep well?","french":"As-tu bien dormi ?","reply":"That's lovely to hear!"},{"prompt":"Are you ready for breakfast?","french":"Es-tu prête pour le petit-déjeuner ?","reply":"Let's have a yummy breakfast!"},{"prompt":"Are you ready for the day?","french":"Es-tu prête pour cette journée ?","reply":"Have a wonderful day!"}]},
+  holiday:{title:"En vacances",icon:"🧳",turns:[{"prompt":"Where do you want to go?","french":"Où veux-tu aller ?","reply":"That sounds like a wonderful trip!"},{"prompt":"Do you like travelling?","french":"Aimes-tu voyager ?","reply":"Travelling is an adventure!"},{"prompt":"What do you pack in your bag?","french":"Que mets-tu dans ton sac ?","reply":"Good thinking! Let's get ready."}]},
+  library:{title:"À la bibliothèque",icon:"📚",turns:[{"prompt":"Do you like books?","french":"Aimes-tu les livres ?","reply":"Books take us on adventures!"},{"prompt":"What story do you like?","french":"Quelle histoire aimes-tu ?","reply":"That sounds like a great story."},{"prompt":"Shall we read together?","french":"Veux-tu lire avec moi ?","reply":"Wonderful! Let's read."}]},
+  clothes:{title:"Choisir ses vêtements",icon:"👗",turns:[{"prompt":"What are you wearing today?","french":"Que portes-tu aujourd'hui ?","reply":"You look lovely!"},{"prompt":"Do you like your shoes?","french":"Aimes-tu tes chaussures ?","reply":"They sound great!"},{"prompt":"Is it cold outside?","french":"Fait-il froid dehors ?","reply":"Let's dress for the weather!"}]},
+  toys:{title:"Mes jouets préférés",icon:"🧸",turns:[{"prompt":"What's your favourite toy?","french":"Quel est ton jouet préféré ?","reply":"That sounds like a lovely toy!"},{"prompt":"Do you like playing with dolls?","french":"Aimes-tu jouer à la poupée ?","reply":"Playing is so much fun!"},{"prompt":"Can I play too?","french":"Je peux jouer aussi ?","reply":"Yay! Let's play together!"}]},
+  sports:{title:"Parlons de sport",icon:"⚽",turns:[{"prompt":"Do you like sports?","french":"Aimes-tu le sport ?","reply":"Being active is great!"},{"prompt":"Can you swim?","french":"Sais-tu nager ?","reply":"Fantastic! Keep practising."},{"prompt":"What's your favourite sport?","french":"Quel est ton sport préféré ?","reply":"That's a brilliant sport!"}]},
+  cooking:{title:"En cuisine",icon:"🥣",turns:[{"prompt":"Do you like cooking?","french":"Aimes-tu cuisiner ?","reply":"Cooking together is fun!"},{"prompt":"Can you help me stir?","french":"Peux-tu m'aider à mélanger ?","reply":"Great job, little chef!"},{"prompt":"Is it yummy?","french":"Est-ce délicieux ?","reply":"Bon appétit!"}]},
+  directions:{title:"Trouver son chemin",icon:"🧭",turns:[{"prompt":"Where is the park?","french":"Où est le parc ?","reply":"Let's look for it together."},{"prompt":"Is it near or far?","french":"Est-ce près ou loin ?","reply":"Good! We are getting closer."},{"prompt":"Can you show me the way?","french":"Peux-tu me montrer le chemin ?","reply":"Thank you, great guide!"}]},
+  picnic:{title:"Le pique-nique",icon:"🧺",turns:[{"prompt":"Would you like a picnic?","french":"Veux-tu faire un pique-nique ?","reply":"A picnic sounds lovely!"},{"prompt":"What would you like to eat?","french":"Que voudrais-tu manger ?","reply":"Yummy! I'll bring some too."},{"prompt":"Shall we sit under the tree?","french":"On s'assoit sous l'arbre ?","reply":"What a lovely place!"}]},
+  feelings:{title:"Comment je me sens",icon:"😊",turns:[{"prompt":"Are you happy today?","french":"Es-tu heureuse aujourd'hui ?","reply":"I'm glad to hear that!"},{"prompt":"What makes you happy?","french":"Qu'est-ce qui te rend heureuse ?","reply":"That is a lovely thing!"},{"prompt":"What do you do when you feel sad?","french":"Que fais-tu quand tu es triste ?","reply":"A hug can make things better."}]},
+  transport:{title:"Les moyens de transport",icon:"🚆",turns:[{"prompt":"How do you go to school?","french":"Comment vas-tu à l'école ?","reply":"That's a good way to travel!"},{"prompt":"Do you like travelling by train?","french":"Aimes-tu voyager en train ?","reply":"Trains are exciting!"},{"prompt":"Would you like to fly in an airplane?","french":"Aimerais-tu prendre l'avion ?","reply":"What a big adventure!"}]}
 };
 
 function conversationReply(themeKey, index, transcript) {
@@ -394,6 +496,12 @@ function conversationReply(themeKey, index, transcript) {
     return like ? "I like " + like.reply + " too! That's great!" : "That sounds fun! I like having fun too!";
   }
 
+  const currentTheme = CONVERSATION_THEMES[themeKey];
+  if (currentTheme && currentTheme.turns[index] && currentTheme.turns[index].reply) {
+    if (/yes|yeah|yep|i do|i can|i am|i'm/.test(text)) return "Yes, that's lovely! " + currentTheme.turns[index].reply;
+    if (/no|not|don't|do not|can't|cannot/.test(text)) return "That's okay! " + currentTheme.turns[index].reply;
+    return currentTheme.turns[index].reply;
+  }
   if (index === 0) return "I'm great, thank you!";
   if (index === 1) {
     const animals = ["cats","dogs","lions","rabbits","pandas","horses","bears","tigers","elephants","dolphins"];
@@ -406,7 +514,7 @@ function conversationReply(themeKey, index, transcript) {
 }
 
 function renderConversationMenu() {
-  return '<button class="back-button" data-view="play">← Retour aux jeux</button><section class="page-intro"><span class="eyebrow">JE PARLE EN ANGLAIS</span><h1>À toi de discuter ! 💬</h1><p>Le renard te parle en anglais et te répond comme un vrai petit compagnon. Vous allez faire 3 échanges.</p></section>' +
+  return '<button class="back-button" data-view="play">← Retour aux jeux</button><section class="page-intro"><span class="eyebrow">JE PARLE EN ANGLAIS</span><h1>À toi de discuter ! 💬</h1><p>Le renard te parle en anglais et te répond comme un vrai petit compagnon. Tu vas découvrir 30 situations et faire 3 échanges à chaque fois.</p></section>' +
     Object.keys(CONVERSATION_THEMES).map(function(key){ const theme=CONVERSATION_THEMES[key]; return '<button class="game-mode-card conversation-mode" data-action="start-conversation" data-theme="'+key+'"><span class="mode-icon">'+theme.icon+'</span><span><strong>'+theme.title+'</strong><small>3 petites questions à l’oral</small></span><span class="mode-arrow">→</span></button>'; }).join('');
 }
 
@@ -522,7 +630,9 @@ function shuffle(list) {
 
 function startGame(mode, topic) {
   const pool = topic && LESSONS[topic] ? LESSONS[topic].words : ALL_WORDS;
-  const selected = shuffle(pool).slice(0, Math.min(6, pool.length));
+  const priority = pool.filter(function (item) { return state.reviewWords.includes(item.word); });
+  const remaining = shuffle(pool.filter(function (item) { return !state.reviewWords.includes(item.word); }));
+  const selected = priority.concat(remaining).slice(0, Math.min(6, pool.length));
   game = {
     mode: mode,
     topic: topic || null,
@@ -554,7 +664,13 @@ function validateAnswer() {
   const question = game.questions[game.index];
   game.answered = true;
   game.lastCorrect = question.options[game.selected].word === question.item.word;
-  if (game.lastCorrect) game.correct += 1;
+  if (game.lastCorrect) {
+    game.correct += 1;
+    state.reviewWords = state.reviewWords.filter(function (word) { return word !== question.item.word; });
+  } else if (!state.reviewWords.includes(question.item.word)) {
+    state.reviewWords.push(question.item.word);
+  }
+  saveState();
   render();
 }
 
@@ -562,6 +678,7 @@ function nextQuestion() {
   if (!game) return;
   if (game.index >= game.questions.length - 1) {
     game.complete = true;
+    if (game.topic && !state.completedGames.includes(game.topic)) state.completedGames.push(game.topic);
     state.diamonds += game.correct;
     state.sessions += 1;
     state.bestScore = Math.max(state.bestScore, game.correct);
@@ -619,7 +736,7 @@ function handleAction(action, target) {
   if (action === "next-conversation") nextConversationTurn();
   if (action === "answer") selectAnswer(Number(target.dataset.answer));
   if (action === "validate-answer") validateAnswer();
-  if (action === "replay-instruction" && game) speakFrench(gameInstruction(game.questions[game.index]));
+  if (action === "replay-instruction" && game) readGameInstruction();
   if (action === "next-question") nextQuestion();
   if (action === "replay-word" && game) speak(game.questions[game.index].item.word);
   if (action === "open-parents") openParents();

@@ -129,6 +129,9 @@ button:focus-visible { outline: 3px solid #7568c8; outline-offset: 3px; }
 .game-mode-card strong { font-size: 17px; }
 .game-mode-card small { color: #777184; line-height: 1.4; font-size: 12px; }
 .mode-arrow { font-size: 24px; }
+.game-status { flex-shrink: 0; padding: 7px 9px; border-radius: 999px; font-size: 11px; font-weight: 900; white-space: nowrap; }
+.game-status.is-done { color: #28764b; background: #dff4e7; }
+.game-status.is-new { color: #80653a; background: #fff0c9; }
 .best-score { text-align: center; color: var(--muted); padding: 12px; }
 .best-score strong { color: var(--ink); }
 .listen-group { margin: 20px 0 27px; }
@@ -163,6 +166,8 @@ button:focus-visible { outline: 3px solid #7568c8; outline-offset: 3px; }
 .question-emoji { text-align: center; font-size: 55px; margin: 10px 0 20px; }
 .listen-prompt { display: block; margin: 0 auto 20px; padding: 13px 20px; border: 0; border-radius: 99px; background: #e5f5ec; color: #327b59; font-weight: 900; cursor: pointer; }
 .instruction-replay { display: block; margin: 15px auto 0; padding: 9px 13px; border: 1px solid #eee5df; border-radius: 99px; background: #fffaf6; color: #806c68; font-size: 12px; font-weight: 800; cursor: pointer; }
+
+.validate-button { margin-top: 38px; }
 .answer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
 .answer-option { min-height: 67px; border: 2px solid #eee9e4; border-radius: 16px; background: #fffdfb; color: var(--ink); cursor: pointer; font-size: 17px; }
 .answer-option:disabled { cursor: default; }
