@@ -268,36 +268,69 @@ function renderGame() {
 
 const CONVERSATION_THEMES = {
   introduce: { title: "Je me présente", icon: "👋", turns: [
-    { prompt: "Hello! What is your name?", french: "Bonjour ! Comment tu t'appelles ?", expected: ["my name", "i am", "i'm"], response: "Nice to meet you!" },
-    { prompt: "How old are you?", french: "Quel âge as-tu ?", expected: ["six", "seven", "five", "i am", "i'm"], response: "That is lovely!" },
-    { prompt: "What do you like?", french: "Qu'est-ce que tu aimes ?", expected: ["i like", "love", "cats", "dogs", "music", "dance", "panda"], response: "Me too! You did a great job!" }
+    { prompt: "How old are you?", french: "Quel âge as-tu ?" },
+    { prompt: "What's your name?", french: "Comment tu t'appelles ?" },
+    { prompt: "What do you like?", french: "Qu'est-ce que tu aimes ?" }
   ]},
   meeting: { title: "Faire connaissance", icon: "🐻", turns: [
-    { prompt: "Hello! How are you today?", french: "Bonjour ! Comment vas-tu aujourd'hui ?", expected: ["good", "great", "fine", "happy", "ok", "well"], response: "I am happy to hear that!" },
-    { prompt: "What is your favourite animal?", french: "Quel est ton animal préféré ?", expected: ["cat", "dog", "lion", "rabbit", "panda", "horse", "bear", "tiger"], response: "What a lovely animal!" },
-    { prompt: "What colour do you like?", french: "Quelle couleur aimes-tu ?", expected: ["blue", "red", "green", "pink", "purple", "yellow", "orange"], response: "Wonderful choice! It was lovely talking to you!" }
+    { prompt: "Hello! How are you today?", french: "Bonjour ! Comment vas-tu aujourd'hui ?" },
+    { prompt: "What's your favourite animal?", french: "Quel est ton animal préféré ?" },
+    { prompt: "What colour do you like?", french: "Quelle couleur aimes-tu ?" }
   ]}
 };
 
+function conversationReply(themeKey, index, transcript) {
+  const text = transcript.toLowerCase().replace(/[^a-z0-9\s']/g, " ").replace(/\s+/g, " ").trim();
+  const ageWords = { one:1, two:2, three:3, four:4, five:5, six:6, seven:7, eight:8, nine:9, ten:10 };
+  const ageMatch = text.match(/\b(\d{1,2})\b/);
+  let age = ageMatch ? Number(ageMatch[1]) : null;
+  if (!age) Object.keys(ageWords).some(function(word){ if (new RegExp("\\b"+word+"\\b").test(text)) { age=ageWords[word]; return true; } return false; });
+
+  if (themeKey === "introduce") {
+    if (index === 0) return age ? "I'm 6! You're " + age + "! What's your name?" : "I'm 6! And what's your name?";
+    if (index === 1) {
+      const nameMatch = transcript.match(/(?:my name is|i am|i'm|this is|it's)\s+([a-z][a-z'-]*)/i);
+      let name = nameMatch ? nameMatch[1] : transcript.trim().split(/\s+/)[0];
+      name = (name || "").replace(/[^a-z'-]/gi, "");
+      if (/^(my|name|is|i|am|hello|hi|it's|this)$/i.test(name)) name = "";
+      return name ? "Nice to meet you, " + name + "! What do you like?" : "Nice to meet you! What do you like?";
+    }
+    const likes = ["cats","dogs","pandas","dinosaurs","music","dancing","drawing","football","chocolate","ice cream","reading"];
+    const like = likes.find(function(item){ return text.includes(item); });
+    return like ? "I like " + like + " too! It was lovely talking to you!" : "That sounds fun! I like having fun too! Well done!";
+  }
+
+  if (index === 0) return "I'm great, thank you! What's your favourite animal?";
+  if (index === 1) {
+    const animals = ["cats","dogs","lions","rabbits","pandas","horses","bears","tigers","elephants","dolphins"];
+    const animal = animals.find(function(item){ return text.includes(item) || text.includes(item.replace(/s$/, "")); });
+    return animal ? "I love " + animal + " too! What colour do you like?" : "That's a lovely choice! What colour do you like?";
+  }
+  const colors = ["blue","red","green","pink","purple","yellow","orange","black","white"];
+  const color = colors.find(function(item){ return new RegExp("\\b"+item+"\\b").test(text); });
+  return color ? "I like " + color + " too! It was lovely talking to you!" : "That's a lovely colour! It was lovely talking to you!";
+}
+
 function renderConversationMenu() {
-  return '<button class="back-button" data-view="play">← Retour aux jeux</button><section class="page-intro"><span class="eyebrow">JE PARLE EN ANGLAIS</span><h1>À toi de discuter ! 💬</h1><p>Le renard te parle en anglais. Écoute, puis réponds avec ta voix. Vous allez faire 3 échanges.</p></section>' +
+  return '<button class="back-button" data-view="play">← Retour aux jeux</button><section class="page-intro"><span class="eyebrow">JE PARLE EN ANGLAIS</span><h1>À toi de discuter ! 💬</h1><p>Le renard te parle en anglais et te répond comme un vrai petit compagnon. Vous allez faire 3 échanges.</p></section>' +
     Object.keys(CONVERSATION_THEMES).map(function(key){ const theme=CONVERSATION_THEMES[key]; return '<button class="game-mode-card conversation-mode" data-action="start-conversation" data-theme="'+key+'"><span class="mode-icon">'+theme.icon+'</span><span><strong>'+theme.title+'</strong><small>3 petites questions à l’oral</small></span><span class="mode-arrow">→</span></button>'; }).join('');
 }
 
 function renderConversation() {
   if (!conversation) return renderConversationMenu();
-  if (conversation.complete) return '<section class="result-card"><div class="result-confetti">🦊 💎 🎉</div><span class="eyebrow">CONVERSATION TERMINÉE</span><h1>Well done !</h1><p>Tu as fait 3 échanges en anglais. Bravo d’avoir parlé !</p><div class="score-circle"><strong>3</strong><small>/ 3</small></div><p>Tu gagnes <strong>3 diamants 💎</strong> !</p><button class="primary-button full-button" data-action="conversation-menu">Choisir une autre conversation</button><button class="secondary-button full-button" data-view="play">Retour aux jeux</button></section>';
+  if (conversation.complete) return '<section class="result-card"><div class="result-confetti">🦊 💎 🎉</div><span class="eyebrow">CONVERSATION TERMINÉE</span><h1>Well done !</h1><p>Tu as discuté en anglais avec le renard. Bravo d’avoir parlé !</p><div class="score-circle"><strong>3</strong><small>/ 3</small></div><p>Tu gagnes <strong>3 diamants 💎</strong> !</p><button class="primary-button full-button" data-action="conversation-menu">Choisir une autre conversation</button><button class="secondary-button full-button" data-view="play">Retour aux jeux</button></section>';
   const theme=CONVERSATION_THEMES[conversation.theme], turn=theme.turns[conversation.index];
   return '<button class="back-button" data-action="conversation-menu">← Choisir un thème</button><section class="game-panel conversation-panel"><div class="game-progress-row"><span>'+theme.icon+' '+theme.title+'</span><span>Échange '+(conversation.index+1)+' / 3</span></div><div class="progress-track"><span style="width:'+((conversation.index)/3*100)+'%"></span></div><div class="conversation-fox">🦊</div><div class="conversation-prompt"><span class="eyebrow">LE RENARD DIT EN ANGLAIS</span><h2>'+turn.prompt+'</h2><p>'+turn.french+'</p><button class="instruction-replay" data-action="repeat-conversation">🔊 Réécouter</button></div>' +
-  (conversation.transcript ? '<div class="conversation-transcript"><strong>Ta réponse :</strong> “'+escapeHtml(conversation.transcript)+'”</div>' : '') +
+  (conversation.transcript ? '<div class="conversation-transcript"><strong>Toi :</strong> “'+escapeHtml(conversation.transcript)+'”</div>' : '') +
+  (conversation.reply ? '<div class="conversation-reply"><strong>Le renard répond :</strong> “'+escapeHtml(conversation.reply)+'”</div>' : '') +
   (conversation.listening ? '<p class="listening-status">🎙️ Je t’écoute… Parle en anglais !</p>' : '') +
-  (conversation.feedback ? '<div class="answer-feedback '+(conversation.matched?'good':'try-again')+'">'+conversation.feedback+'</div>' : '') +
-  (conversation.waiting ? '<button class="primary-button full-button" data-action="next-conversation">Continuer →</button>' : '<button class="primary-button full-button mic-button" data-action="record-conversation" '+(conversation.listening?'disabled':'')+'>🎙️ '+(conversation.listening?'Je t’écoute…':'À toi de répondre !')+'</button>')+
+  (conversation.feedback ? '<div class="answer-feedback good">'+conversation.feedback+'</div>' : '') +
+  (conversation.waiting ? '<button class="primary-button full-button" data-action="next-conversation">'+(conversation.index===2?'Terminer la conversation':'Continuer la discussion →')+'</button>' : '<button class="primary-button full-button mic-button" data-action="record-conversation" '+(conversation.listening?'disabled':'')+'>🎙️ '+(conversation.listening?'Je t’écoute…':'À toi de répondre !')+'</button>')+
   '<p class="conversation-help">Appuie sur le micro et réponds en anglais. Si besoin, demande à un parent de vérifier l’autorisation du micro.</p></section>';
 }
 
 function startConversation(themeKey) {
-  conversation={theme:themeKey,index:0,transcript:"",listening:false,waiting:false,matched:false,feedback:"",complete:false};
+  conversation={theme:themeKey,index:0,transcript:"",reply:"",listening:false,waiting:false,matched:false,feedback:"",complete:false};
   activeView="conversation"; render(); speak(CONVERSATION_THEMES[themeKey].turns[0].prompt);
 }
 
@@ -313,16 +346,15 @@ function listenToConversation() {
     conversation.listening=true; render();
     speechRecognition.onresult=function(event){
       const transcript=event.results[0][0].transcript;
-      const turn=CONVERSATION_THEMES[conversation.theme].turns[conversation.index];
-      const normalized=transcript.toLowerCase().replace(/[^a-z\s']/g," ");
-      const matched=turn.expected.some(function(phrase){ return normalized.includes(phrase); });
+      const reply=conversationReply(conversation.theme,conversation.index,transcript);
       conversation.transcript=transcript;
+      conversation.reply=reply;
       conversation.listening=false;
-      conversation.matched=matched;
-      conversation.feedback=matched ? "Great job ! J’ai bien entendu ta réponse. 💛" : "Bravo d’avoir essayé ! On continue ensemble. 💛";
+      conversation.matched=!!transcript.trim();
+      conversation.feedback="Great job! Le renard t'a répondu. 💛";
       conversation.waiting=true;
       render();
-      speak(matched ? turn.response : "Good try! Let's keep going!");
+      speak(reply);
     };
     speechRecognition.onerror=function(){ conversation.listening=false; render(); showToast("Je n’ai pas entendu. Réessaie en parlant près de la tablette."); };
     speechRecognition.onend=function(){ if(conversation && conversation.listening){conversation.listening=false;render();} };
@@ -333,9 +365,9 @@ function listenToConversation() {
 function nextConversationTurn() {
   if(!conversation || !conversation.waiting) return;
   if(conversation.index===2){
-    conversation.complete=true; conversation.waiting=false; state.diamonds+=3; state.sessions+=1; saveState(); render(); speak("Well done! Three conversations!"); return;
+    conversation.complete=true; conversation.waiting=false; state.diamonds+=3; state.sessions+=1; saveState(); render(); speak("Well done! That was a lovely conversation!"); return;
   }
-  conversation.index++; conversation.transcript=""; conversation.feedback=""; conversation.waiting=false; conversation.matched=false; render();
+  conversation.index++; conversation.transcript=""; conversation.reply=""; conversation.feedback=""; conversation.waiting=false; conversation.matched=false; render();
   speak(CONVERSATION_THEMES[conversation.theme].turns[conversation.index].prompt);
 }
 
