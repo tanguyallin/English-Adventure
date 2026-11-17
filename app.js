@@ -123,7 +123,7 @@ function showToast(message) {
 }
 
 function progressPercent() {
-  return Math.min(100, Math.round((state.completedLessons.length / 2) * 100));
+  return Math.min(100, Math.round((state.completedLessons.length / Object.keys(LESSONS).length) * 100));
 }
 
 function renderHome() {
@@ -162,7 +162,7 @@ function renderLearn() {
         '<span class="lesson-illustration">' + lesson.icon + '</span><span class="lesson-info"><strong>' + lesson.title + '</strong><small>' + lesson.words.length + ' mots à découvrir</small></span>' +
         '<span class="lesson-status">' + (done ? "✅" : "→") + '</span></button>';
     }).join("") + '</div>' +
-    '<div class="coming-soon"><span>🍎</span><div><strong>Bientôt : les fruits et les nombres !</strong><small>De nouvelles aventures arrivent.</small></div><span class="lock">🔒</span></div>';
+    '';
 }
 
 function renderLesson() {
@@ -182,14 +182,14 @@ function renderPlay() {
   return '<section class="page-intro"><span class="eyebrow">À TOI DE JOUER</span><h1>Les petits jeux 🧩</h1><p>10 questions pour gagner des diamants. Tu peux recommencer autant de fois que tu veux !</p></section>' +
     '<button class="game-mode-card quiz-mode" data-action="start-game" data-mode="quiz"><span class="mode-icon">🧠</span><span><strong>Le quiz des mots</strong><small>Lis le mot français et trouve son nom anglais.</small></span><span class="mode-arrow">→</span></button>' +
     '<button class="game-mode-card listen-mode" data-action="start-game" data-mode="listen"><span class="mode-icon">🎧</span><span><strong>L\'oreille magique</strong><small>Écoute le mot anglais et choisis la bonne image.</small></span><span class="mode-arrow">→</span></button>' +
+    '<button class="game-mode-card conversation-mode" data-action="conversation-menu"><span class="mode-icon">💬</span><span><strong>On discute en anglais !</strong><small>Fais 3 échanges avec le petit renard.</small></span><span class="mode-arrow">→</span></button>' +
     '<div class="tip-card">💎 <span>Une bonne réponse = un diamant à la fin du jeu. Il y a 10 questions !</span></div>' +
     '<div class="best-score">🏅 Ton meilleur score : <strong>' + state.bestScore + '/10</strong></div>';
 }
 
 function renderListen() {
   return '<section class="page-intro"><span class="eyebrow">J\'ÉCOUTE ET JE RÉPÈTE</span><h1>Les mots à l\'oreille 🎧</h1><p>Touche une carte pour écouter le mot en anglais. À toi de le répéter !</p></section>' +
-    '<div class="listen-group"><h2>🌈 Les couleurs</h2><div class="listen-grid">' + LESSONS.colors.words.map(wordCard).join("") + '</div></div>' +
-    '<div class="listen-group"><h2>🐾 Les animaux</h2><div class="listen-grid">' + LESSONS.animals.words.map(wordCard).join("") + '</div></div>';
+    Object.keys(LESSONS).map(function(key){ return '<div class="listen-group"><h2>' + LESSONS[key].icon + ' ' + LESSONS[key].title + '</h2><div class="listen-grid">' + LESSONS[key].words.map(wordCard).join("") + '</div></div>'; }).join("");
 }
 
 function wordCard(item) {
