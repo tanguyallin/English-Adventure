@@ -102,6 +102,55 @@ function escapeHtml(value) {
   });
 }
 
+let availableSpeechVoices = [];
+let preferredEnglishVoice = null;
+let preferredFrenchVoice = null;
+
+function refreshSpeechVoices() {
+  if (!("speechSynthesis" in window)) return;
+  availableSpeechVoices = window.speechSynthesis.getVoices() || [];
+  function chooseVoice(language) {
+    const prefix = language.toLowerCase().split("-")[0];
+    const matches = availableSpeechVoices.filter(function (voice) {
+      return voice.lang && voice.lang.toLowerCase().startsWith(prefix);
+    });
+    return matches.find(function (voice) {
+      return /google/i.test(voice.name) && voice.lang.toLowerCase() === language.toLowerCase();
+    }) || matches.find(function (voice) {
+      return voice.lang.toLowerCase() === language.toLowerCase() && voice.localService;
+    }) || matches.find(function (voice) {
+      return /google/i.test(voice.name);
+    }) || matches.find(function (voice) {
+      return voice.lang.toLowerCase() === language.toLowerCase();
+    }) || matches[0] || null;
+  }
+  preferredEnglishVoice = chooseVoice("en-GB") || chooseVoice("en-US");
+  preferredFrenchVoice = chooseVoice("fr-FR") || chooseVoice("fr-CA");
+}
+
+function makeSpeechUtterance(text, language, rate) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = language;
+  utterance.rate = rate;
+  utterance.pitch = 1;
+  utterance.volume = 1;
+
+  // Prefer an already-installed voice to avoid slow online voice loading.
+  const voice = language.toLowerCase().startsWith("en")
+    ? preferredEnglishVoice
+    : preferredFrenchVoice;
+  if (voice) {
+    utterance.voice = voice;
+    utterance.lang = voice.lang;
+  }
+  return utterance;
+}
+
+if ("speechSynthesis" in window) {
+  refreshSpeechVoices();
+  window.speechSynthesis.addEventListener("voiceschanged", refreshSpeechVoices);
+}
+
 function speakWithLanguage(text, language, rate, cancelCurrent) {
   if (!state.soundEnabled) {
     showToast("Le son est désactivé dans l'espace parents.");
@@ -111,17 +160,35 @@ function speakWithLanguage(text, language, rate, cancelCurrent) {
     showToast("La lecture audio n'est pas disponible sur cet appareil.");
     return;
   }
-  if (cancelCurrent) window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = language;
-  utterance.rate = rate;
-  utterance.pitch = language === "fr-FR" ? 1 : 1.08;
-  utterance.volume = 1;
+  // Voices are selected once at startup / voiceschanged; do not query Android on every tap.
+  // Avoid cancel() when the speech queue is already idle: Android can add startup latency.
+  if (cancelCurrent && (window.speechSynthesis.speaking || window.speechSynthesis.pending)) {
+    window.speechSynthesis.cancel();
+  }
+  const utterance = makeSpeechUtterance(text, language, rate);
   window.speechSynthesis.speak(utterance);
 }
 
+
+let speechEngineWarmed = false;
+function warmSpeechEngine() {
+  if (speechEngineWarmed || !("speechSynthesis" in window)) return;
+  speechEngineWarmed = true;
+  try {
+    const warmup = new SpeechSynthesisUtterance(" ");
+    warmup.lang = preferredEnglishVoice ? preferredEnglishVoice.lang : "en-GB";
+    warmup.volume = 0;
+    warmup.rate = 10;
+    window.speechSynthesis.speak(warmup);
+  } catch (error) {
+    // The first real utterance will initialize speech synthesis if warm-up is unsupported.
+  }
+}
+
+document.addEventListener("pointerdown", warmSpeechEngine, { once: true, passive: true });
+
 function speak(word) {
-  speakWithLanguage(word, "en-GB", 0.78, true);
+  speakWithLanguage(word, "en-GB", 0.9, true);
 }
 
 function speakFrench(text) {
@@ -129,7 +196,7 @@ function speakFrench(text) {
 }
 
 function speakEnglishAfterCurrent(word) {
-  speakWithLanguage(word, "en-GB", 0.78, false);
+  speakWithLanguage(word, "en-GB", 0.9, false);
 }
 
 function showToast(message) {
@@ -377,8 +444,8 @@ function listenToConversation() {
       conversation.matched=!!transcript.trim();
       conversation.history.push({prompt:CONVERSATION_THEMES[conversation.theme].turns[conversation.index].prompt,transcript:transcript,reply:reply});
       render();
-      const utterance=new SpeechSynthesisUtterance(reply);
-      utterance.lang="en-GB"; utterance.rate=0.78; utterance.pitch=1.08;
+      refreshSpeechVoices();
+      const utterance=makeSpeechUtterance(reply,"en-GB",0.9);
       utterance.onend=function(){
         if(!conversation) return;
         if(conversation.index===2){
@@ -388,6 +455,10 @@ function listenToConversation() {
           conversation.index++;
           conversation.transcript=""; conversation.reply="";
           render();
+          requestAnimationFrame(function(){
+            const replyButton=document.querySelector(".conversation-panel .mic-button");
+            if(replyButton) replyButton.scrollIntoView({behavior:"smooth",block:"center"});
+          });
           speak(CONVERSATION_THEMES[conversation.theme].turns[conversation.index].prompt);
         }
       };
