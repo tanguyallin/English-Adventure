@@ -1,24 +1,66 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-    <meta charset="UTF-8">
-    <title>English Adventure</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>English Adventure</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-<h1>🌈 English Adventure</h1>
+<div class="container">
 
-<div class="card red" onclick="speak('red')">
-    Red
-</div>
+    <h1>🦊 English Adventure</h1>
 
-<div class="card blue" onclick="speak('blue')">
-    Blue
-</div>
+    <p class="subtitle">
+        Apprenons l'anglais en jouant
+    </p>
 
-<div class="card green" onclick="speak('green')">
-    Green
+    <div class="menu">
+
+        <button class="big-button red"
+            onclick="location.href='#colors'">
+            🌈 Couleurs
+        </button>
+
+        <button class="big-button blue"
+            onclick="location.href='#animals'">
+            🐶 Animaux
+        </button>
+
+        <button class="big-button green">
+            🎮 Jeux
+        </button>
+
+        <button class="big-button yellow">
+            ⭐ Récompenses
+        </button>
+
+    </div>
+
+    <div id="colors">
+
+        <h2>🌈 Les couleurs</h2>
+
+        <div class="color-card red"
+            onclick="speak('Red')">Red</div>
+
+        <div class="color-card blue"
+            onclick="speak('Blue')">Blue</div>
+
+        <div class="color-card green"
+            onclick="speak('Green')">Green</div>
+
+        <div class="color-card yellow"
+            onclick="speak('Yellow')">Yellow</div>
+
+    </div>
+
 </div>
 
 <script src="app.js"></script>
