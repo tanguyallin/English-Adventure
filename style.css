@@ -246,6 +246,7 @@ button:focus-visible { outline: 3px solid #7568c8; outline-offset: 3px; }
 .conversation-prompt h2 { font-size:25px; line-height:1.35; margin:8px 0; }
 .conversation-prompt p { color:var(--muted); margin:0; }
 .conversation-transcript { margin-top:15px; padding:14px; background:#eef8ff; border-radius:14px; line-height:1.5; }
+.conversation-reply { margin-top:12px; padding:15px; background:#eff9e9; border:2px solid #d4edc8; border-radius:16px; line-height:1.5; }
 .listening-status { text-align:center; color:#28764b; font-weight:900; animation:wave 1.2s infinite; }
 .mic-button { background:#6e66c8; box-shadow:0 5px 0 rgba(72,64,145,.2); }
 .mic-button:disabled { opacity:.6; }
