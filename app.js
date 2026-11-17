@@ -317,17 +317,14 @@ function renderConversation() {
   if (!conversation) return renderConversationMenu();
   if (conversation.complete) return '<section class="result-card"><div class="result-confetti">🦊 💎 🎉</div><span class="eyebrow">CONVERSATION TERMINÉE</span><h1>Well done !</h1><p>Tu as discuté en anglais avec le renard. Bravo d’avoir parlé !</p><div class="score-circle"><strong>3</strong><small>/ 3</small></div><p>Tu gagnes <strong>3 diamants 💎</strong> !</p><button class="primary-button full-button" data-action="conversation-menu">Choisir une autre conversation</button><button class="secondary-button full-button" data-view="play">Retour aux jeux</button></section>';
   const theme=CONVERSATION_THEMES[conversation.theme], turn=theme.turns[conversation.index];
-  return '<button class="back-button" data-action="conversation-menu">← Choisir un thème</button><section class="game-panel conversation-panel"><div class="game-progress-row"><span>'+theme.icon+' '+theme.title+'</span><span>Échange '+(conversation.index+1)+' / 3</span></div><div class="progress-track"><span style="width:'+((conversation.index)/3*100)+'%"></span></div><div class="conversation-fox">🦊</div><div class="conversation-prompt"><span class="eyebrow">LE RENARD DIT EN ANGLAIS</span><h2>'+turn.prompt+'</h2><p>'+turn.french+'</p><button class="instruction-replay" data-action="repeat-conversation">🔊 Réécouter</button></div>' +
-  (conversation.transcript ? '<div class="conversation-transcript"><strong>Toi :</strong> “'+escapeHtml(conversation.transcript)+'”</div>' : '') +
-  (conversation.reply ? '<div class="conversation-reply"><strong>Le renard répond :</strong> “'+escapeHtml(conversation.reply)+'”</div>' : '') +
-  (conversation.listening ? '<p class="listening-status">🎙️ Je t’écoute… Parle en anglais !</p>' : '') +
-  (conversation.feedback ? '<div class="answer-feedback good">'+conversation.feedback+'</div>' : '') +
-  (conversation.waiting ? '<button class="primary-button full-button" data-action="next-conversation">'+(conversation.index===2?'Terminer la conversation':'Continuer la discussion →')+'</button>' : '<button class="primary-button full-button mic-button" data-action="record-conversation" '+(conversation.listening?'disabled':'')+'>🎙️ '+(conversation.listening?'Je t’écoute…':'À toi de répondre !')+'</button>')+
-  '<p class="conversation-help">Appuie sur le micro et réponds en anglais. Si besoin, demande à un parent de vérifier l’autorisation du micro.</p></section>';
+  const history=(conversation.history||[]).map(function(item){return '<div class="conversation-exchange"><div class="conversation-prompt"><strong>🦊 Le renard :</strong> “'+escapeHtml(item.prompt)+'”</div><div class="conversation-transcript"><strong>Toi :</strong> “'+escapeHtml(item.transcript)+'”</div><div class="conversation-reply"><strong>🦊 Le renard :</strong> “'+escapeHtml(item.reply)+'”</div></div>';}).join('');
+  return '<button class="back-button" data-action="conversation-menu">← Choisir un thème</button><section class="game-panel conversation-panel"><div class="game-progress-row"><span>'+theme.icon+' '+theme.title+'</span><span>Interaction '+(conversation.index+1)+' / 3</span></div><div class="progress-track"><span style="width:'+((conversation.index)/3*100)+'%"></span></div><div class="conversation-fox">🦊</div><div class="conversation-history">'+history+'</div><div class="conversation-prompt"><span class="eyebrow">À TON TOUR !</span><h2>'+turn.prompt+'</h2><p>'+turn.french+'</p><button class="instruction-replay" data-action="repeat-conversation">🔊 Réécouter</button></div>' +
+  (conversation.listening ? '<p class="listening-status">🎙️ Je t’écoute… Parle en anglais !</p>' : '<button class="primary-button full-button mic-button" data-action="record-conversation">🎙️ À toi de répondre !</button>')+
+  '<p class="conversation-help">Appuie sur le bouton et réponds en anglais. Le renard te répondra puis te posera directement la question suivante.</p></section>';
 }
 
 function startConversation(themeKey) {
-  conversation={theme:themeKey,index:0,transcript:"",reply:"",listening:false,waiting:false,matched:false,feedback:"",complete:false};
+  conversation={theme:themeKey,index:0,transcript:"",reply:"",history:[],listening:false,waiting:false,matched:false,feedback:"",complete:false};
   activeView="conversation"; render(); speak(CONVERSATION_THEMES[themeKey].turns[0].prompt);
 }
 
@@ -348,10 +345,24 @@ function listenToConversation() {
       conversation.reply=reply;
       conversation.listening=false;
       conversation.matched=!!transcript.trim();
-      conversation.feedback="Great job! Le renard t'a répondu. 💛";
-      conversation.waiting=true;
+      conversation.history.push({prompt:CONVERSATION_THEMES[conversation.theme].turns[conversation.index].prompt,transcript:transcript,reply:reply});
       render();
-      speak(reply);
+      const utterance=new SpeechSynthesisUtterance(reply);
+      utterance.lang="en-GB"; utterance.rate=0.78; utterance.pitch=1.08;
+      utterance.onend=function(){
+        if(!conversation) return;
+        if(conversation.index===2){
+          conversation.complete=true; state.diamonds+=3; state.sessions+=1; saveState(); render();
+          speak("Well done! That was a lovely conversation!");
+        } else {
+          conversation.index++;
+          conversation.transcript=""; conversation.reply="";
+          render();
+          speak(CONVERSATION_THEMES[conversation.theme].turns[conversation.index].prompt);
+        }
+      };
+      if(state.soundEnabled && "speechSynthesis" in window) window.speechSynthesis.speak(utterance);
+      else utterance.onend();
     };
     speechRecognition.onerror=function(){ conversation.listening=false; render(); showToast("Je n’ai pas entendu. Réessaie en parlant près de la tablette."); };
     speechRecognition.onend=function(){ if(conversation && conversation.listening){conversation.listening=false;render();} };
@@ -359,14 +370,7 @@ function listenToConversation() {
   } catch(error) { conversation.listening=false; render(); showToast("Impossible d’activer le micro. Vérifie l’autorisation."); }
 }
 
-function nextConversationTurn() {
-  if(!conversation || !conversation.waiting) return;
-  if(conversation.index===2){
-    conversation.complete=true; conversation.waiting=false; state.diamonds+=3; state.sessions+=1; saveState(); render(); speak("Well done! That was a lovely conversation!"); return;
-  }
-  conversation.index++; conversation.transcript=""; conversation.reply=""; conversation.feedback=""; conversation.waiting=false; conversation.matched=false; render();
-  speak(CONVERSATION_THEMES[conversation.theme].turns[conversation.index].prompt);
-}
+function nextConversationTurn() { /* Les échanges avancent automatiquement après la réponse du renard. */ }
 
 function renderView() {
   if (activeView === "home") return renderHome();
