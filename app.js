@@ -338,7 +338,8 @@ function nextConversationTurn() {
   conversation.index++; conversation.transcript=""; conversation.feedback=""; conversation.waiting=false; conversation.matched=false; render();
   speak(CONVERSATION_THEMES[conversation.theme].turns[conversation.index].prompt);
 }
-\nfunction renderView() {
+
+function renderView() {
   if (activeView === "home") return renderHome();
   if (activeView === "learn") return renderLearn();
   if (activeView === "lesson") return renderLesson();
