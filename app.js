@@ -62,6 +62,8 @@ let state = loadState();
 let activeView = "home";
 let activeLesson = "colors";
 let game = null;
+let conversation = null;
+let speechRecognition = null;
 let deferredInstallPrompt = null;
 
 const app = document.getElementById("app");
@@ -263,7 +265,80 @@ function renderGame() {
     '</section>';
 }
 
-function renderView() {
+
+const CONVERSATION_THEMES = {
+  introduce: { title: "Je me présente", icon: "👋", turns: [
+    { prompt: "Hello! What is your name?", french: "Bonjour ! Comment tu t'appelles ?", expected: ["my name", "i am", "i'm"], response: "Nice to meet you!" },
+    { prompt: "How old are you?", french: "Quel âge as-tu ?", expected: ["six", "seven", "five", "i am", "i'm"], response: "That is lovely!" },
+    { prompt: "What do you like?", french: "Qu'est-ce que tu aimes ?", expected: ["i like", "love", "cats", "dogs", "music", "dance", "panda"], response: "Me too! You did a great job!" }
+  ]},
+  meeting: { title: "Faire connaissance", icon: "🐻", turns: [
+    { prompt: "Hello! How are you today?", french: "Bonjour ! Comment vas-tu aujourd'hui ?", expected: ["good", "great", "fine", "happy", "ok", "well"], response: "I am happy to hear that!" },
+    { prompt: "What is your favourite animal?", french: "Quel est ton animal préféré ?", expected: ["cat", "dog", "lion", "rabbit", "panda", "horse", "bear", "tiger"], response: "What a lovely animal!" },
+    { prompt: "What colour do you like?", french: "Quelle couleur aimes-tu ?", expected: ["blue", "red", "green", "pink", "purple", "yellow", "orange"], response: "Wonderful choice! It was lovely talking to you!" }
+  ]}
+};
+
+function renderConversationMenu() {
+  return '<button class="back-button" data-view="play">← Retour aux jeux</button><section class="page-intro"><span class="eyebrow">JE PARLE EN ANGLAIS</span><h1>À toi de discuter ! 💬</h1><p>Le renard te parle en anglais. Écoute, puis réponds avec ta voix. Vous allez faire 3 échanges.</p></section>' +
+    Object.keys(CONVERSATION_THEMES).map(function(key){ const theme=CONVERSATION_THEMES[key]; return '<button class="game-mode-card conversation-mode" data-action="start-conversation" data-theme="'+key+'"><span class="mode-icon">'+theme.icon+'</span><span><strong>'+theme.title+'</strong><small>3 petites questions à l’oral</small></span><span class="mode-arrow">→</span></button>'; }).join('');
+}
+
+function renderConversation() {
+  if (!conversation) return renderConversationMenu();
+  if (conversation.complete) return '<section class="result-card"><div class="result-confetti">🦊 💎 🎉</div><span class="eyebrow">CONVERSATION TERMINÉE</span><h1>Well done !</h1><p>Tu as fait 3 échanges en anglais. Bravo d’avoir parlé !</p><div class="score-circle"><strong>3</strong><small>/ 3</small></div><p>Tu gagnes <strong>3 diamants 💎</strong> !</p><button class="primary-button full-button" data-action="conversation-menu">Choisir une autre conversation</button><button class="secondary-button full-button" data-view="play">Retour aux jeux</button></section>';
+  const theme=CONVERSATION_THEMES[conversation.theme], turn=theme.turns[conversation.index];
+  return '<button class="back-button" data-action="conversation-menu">← Choisir un thème</button><section class="game-panel conversation-panel"><div class="game-progress-row"><span>'+theme.icon+' '+theme.title+'</span><span>Échange '+(conversation.index+1)+' / 3</span></div><div class="progress-track"><span style="width:'+((conversation.index)/3*100)+'%"></span></div><div class="conversation-fox">🦊</div><div class="conversation-prompt"><span class="eyebrow">LE RENARD DIT EN ANGLAIS</span><h2>'+turn.prompt+'</h2><p>'+turn.french+'</p><button class="instruction-replay" data-action="repeat-conversation">🔊 Réécouter</button></div>' +
+  (conversation.transcript ? '<div class="conversation-transcript"><strong>Ta réponse :</strong> “'+escapeHtml(conversation.transcript)+'”</div>' : '') +
+  (conversation.listening ? '<p class="listening-status">🎙️ Je t’écoute… Parle en anglais !</p>' : '') +
+  (conversation.feedback ? '<div class="answer-feedback '+(conversation.matched?'good':'try-again')+'">'+conversation.feedback+'</div>' : '') +
+  (conversation.waiting ? '<button class="primary-button full-button" data-action="next-conversation">Continuer →</button>' : '<button class="primary-button full-button mic-button" data-action="record-conversation" '+(conversation.listening?'disabled':'')+'>🎙️ '+(conversation.listening?'Je t’écoute…':'À toi de répondre !')+'</button>')+
+  '<p class="conversation-help">Appuie sur le micro et réponds en anglais. Si besoin, demande à un parent de vérifier l’autorisation du micro.</p></section>';
+}
+
+function startConversation(themeKey) {
+  conversation={theme:themeKey,index:0,transcript:"",listening:false,waiting:false,matched:false,feedback:"",complete:false};
+  activeView="conversation"; render(); speak(CONVERSATION_THEMES[themeKey].turns[0].prompt);
+}
+
+function listenToConversation() {
+  if (!conversation || conversation.listening || conversation.waiting) return;
+  const Recognition=window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!Recognition) { showToast("La reconnaissance vocale n'est pas disponible ici. Essaie avec Chrome sur la tablette."); return; }
+  try {
+    speechRecognition=new Recognition();
+    speechRecognition.lang="en-GB";
+    speechRecognition.interimResults=false;
+    speechRecognition.maxAlternatives=1;
+    conversation.listening=true; render();
+    speechRecognition.onresult=function(event){
+      const transcript=event.results[0][0].transcript;
+      const turn=CONVERSATION_THEMES[conversation.theme].turns[conversation.index];
+      const normalized=transcript.toLowerCase().replace(/[^a-z\s']/g," ");
+      const matched=turn.expected.some(function(phrase){ return normalized.includes(phrase); });
+      conversation.transcript=transcript;
+      conversation.listening=false;
+      conversation.matched=matched;
+      conversation.feedback=matched ? "Great job ! J’ai bien entendu ta réponse. 💛" : "Bravo d’avoir essayé ! On continue ensemble. 💛";
+      conversation.waiting=true;
+      render();
+      speak(matched ? turn.response : "Good try! Let's keep going!");
+    };
+    speechRecognition.onerror=function(){ conversation.listening=false; render(); showToast("Je n’ai pas entendu. Réessaie en parlant près de la tablette."); };
+    speechRecognition.onend=function(){ if(conversation && conversation.listening){conversation.listening=false;render();} };
+    speechRecognition.start();
+  } catch(error) { conversation.listening=false; render(); showToast("Impossible d’activer le micro. Vérifie l’autorisation."); }
+}
+
+function nextConversationTurn() {
+  if(!conversation || !conversation.waiting) return;
+  if(conversation.index===2){
+    conversation.complete=true; conversation.waiting=false; state.diamonds+=3; state.sessions+=1; saveState(); render(); speak("Well done! Three conversations!"); return;
+  }
+  conversation.index++; conversation.transcript=""; conversation.feedback=""; conversation.waiting=false; conversation.matched=false; render();
+  speak(CONVERSATION_THEMES[conversation.theme].turns[conversation.index].prompt);
+}
+\nfunction renderView() {
   if (activeView === "home") return renderHome();
   if (activeView === "learn") return renderLearn();
   if (activeView === "lesson") return renderLesson();
@@ -272,6 +347,8 @@ function renderView() {
   if (activeView === "rewards") return renderRewards();
   if (activeView === "parents") return renderParents();
   if (activeView === "game") return renderGame();
+  if (activeView === "conversation-menu") return renderConversationMenu();
+  if (activeView === "conversation") return renderConversation();
   return renderHome();
 }
 
@@ -394,6 +471,11 @@ function handleAction(action, target) {
   }
   if (action === "complete-lesson") completeLesson(target.dataset.topic);
   if (action === "start-game") startGame(target.dataset.mode);
+  if (action === "conversation-menu") { if(speechRecognition) speechRecognition.abort(); conversation=null; activeView="conversation-menu"; render(); }
+  if (action === "start-conversation") startConversation(target.dataset.theme);
+  if (action === "record-conversation") listenToConversation();
+  if (action === "repeat-conversation" && conversation) speak(CONVERSATION_THEMES[conversation.theme].turns[conversation.index].prompt);
+  if (action === "next-conversation") nextConversationTurn();
   if (action === "answer") selectAnswer(Number(target.dataset.answer));
   if (action === "validate-answer") validateAnswer();
   if (action === "replay-instruction" && game) speakFrench(gameInstruction(game.questions[game.index]));
@@ -450,6 +532,7 @@ app.addEventListener("click", function (event) {
   if (target.dataset.view) {
     activeView = target.dataset.view;
     if (activeView !== "game") game = null;
+    if (activeView !== "conversation") { if(speechRecognition) speechRecognition.abort(); conversation=null; }
     render();
   }
 });
