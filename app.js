@@ -102,6 +102,41 @@ function escapeHtml(value) {
   });
 }
 
+let availableSpeechVoices = [];
+
+function refreshSpeechVoices() {
+  if (!("speechSynthesis" in window)) return;
+  availableSpeechVoices = window.speechSynthesis.getVoices() || [];
+}
+
+function makeSpeechUtterance(text, language, rate) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = language;
+  utterance.rate = rate;
+  utterance.pitch = language === "fr-FR" ? 1 : 1.08;
+  utterance.volume = 1;
+
+  // Prefer an already-installed voice to avoid slow online voice loading.
+  const languagePrefix = language.toLowerCase().split("-")[0];
+  const matchingVoices = availableSpeechVoices.filter(function (voice) {
+    return voice.lang && voice.lang.toLowerCase().startsWith(languagePrefix);
+  });
+  const voice = matchingVoices.find(function (item) {
+    return item.lang.toLowerCase() === language.toLowerCase() && item.localService;
+  }) || matchingVoices.find(function (item) {
+    return item.lang.toLowerCase() === language.toLowerCase();
+  }) || matchingVoices.find(function (item) {
+    return item.localService;
+  }) || matchingVoices[0];
+  if (voice) utterance.voice = voice;
+  return utterance;
+}
+
+if ("speechSynthesis" in window) {
+  refreshSpeechVoices();
+  window.speechSynthesis.addEventListener("voiceschanged", refreshSpeechVoices);
+}
+
 function speakWithLanguage(text, language, rate, cancelCurrent) {
   if (!state.soundEnabled) {
     showToast("Le son est désactivé dans l'espace parents.");
@@ -111,17 +146,14 @@ function speakWithLanguage(text, language, rate, cancelCurrent) {
     showToast("La lecture audio n'est pas disponible sur cet appareil.");
     return;
   }
+  refreshSpeechVoices();
   if (cancelCurrent) window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = language;
-  utterance.rate = rate;
-  utterance.pitch = language === "fr-FR" ? 1 : 1.08;
-  utterance.volume = 1;
+  const utterance = makeSpeechUtterance(text, language, rate);
   window.speechSynthesis.speak(utterance);
 }
 
 function speak(word) {
-  speakWithLanguage(word, "en-GB", 0.78, true);
+  speakWithLanguage(word, "en-GB", 0.9, true);
 }
 
 function speakFrench(text) {
@@ -129,7 +161,7 @@ function speakFrench(text) {
 }
 
 function speakEnglishAfterCurrent(word) {
-  speakWithLanguage(word, "en-GB", 0.78, false);
+  speakWithLanguage(word, "en-GB", 0.9, false);
 }
 
 function showToast(message) {
@@ -377,8 +409,8 @@ function listenToConversation() {
       conversation.matched=!!transcript.trim();
       conversation.history.push({prompt:CONVERSATION_THEMES[conversation.theme].turns[conversation.index].prompt,transcript:transcript,reply:reply});
       render();
-      const utterance=new SpeechSynthesisUtterance(reply);
-      utterance.lang="en-GB"; utterance.rate=0.78; utterance.pitch=1.08;
+      refreshSpeechVoices();
+      const utterance=makeSpeechUtterance(reply,"en-GB",0.9);
       utterance.onend=function(){
         if(!conversation) return;
         if(conversation.index===2){
