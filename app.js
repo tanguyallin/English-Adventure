@@ -387,11 +387,15 @@ function renderNav() {
     ["home", "⌂", "Accueil"],
     ["learn", "📖", "Apprendre"],
     ["play", "🧩", "Jouer"],
-    ["listen", "🎧", "Écouter"],
+    ["conversation", "💬", "Conversation"],
     ["rewards", "💎", "Diamants"]
   ];
   return '<nav class="bottom-nav" aria-label="Navigation principale">' + items.map(function (item) {
-    return '<button class="nav-item ' + (activeView === item[0] || (activeView === "lesson" && item[0] === "learn") || (activeView === "game" && item[0] === "play") ? "active" : "") + '" data-view="' + item[0] + '"><span>' + item[1] + '</span><small>' + item[2] + '</small></button>';
+    const active = item[0] === "conversation"
+      ? (activeView === "conversation" || activeView === "conversation-menu")
+      : (activeView === item[0] || (activeView === "lesson" && item[0] === "learn") || (activeView === "game" && item[0] === "play"));
+    const target = item[0] === "conversation" ? 'data-action="conversation-menu"' : 'data-view="' + item[0] + '"';
+    return '<button class="nav-item ' + (active ? "active" : "") + '" ' + target + '><span>' + item[1] + '</span><small>' + item[2] + '</small></button>';
   }).join("") + '<button class="nav-item parent-nav ' + (activeView === "parents" ? "active" : "") + '" data-action="open-parents"><span>🔐</span><small>Parents</small></button></nav>';
 }
 
