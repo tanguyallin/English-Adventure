@@ -238,3 +238,15 @@ button:focus-visible { outline: 3px solid #7568c8; outline-offset: 3px; }
   .nav-item span { font-size: 19px; }
   .nav-item small { font-size: 8px; }
 }
+
+.conversation-mode { background: linear-gradient(110deg,#e3f2ff,#eee8ff); }
+.conversation-panel { max-width: 650px; margin: 0 auto; }
+.conversation-fox { text-align:center; font-size:64px; margin:18px 0 8px; }
+.conversation-prompt { padding:20px; border-radius:20px; background:#f3efff; text-align:center; }
+.conversation-prompt h2 { font-size:25px; line-height:1.35; margin:8px 0; }
+.conversation-prompt p { color:var(--muted); margin:0; }
+.conversation-transcript { margin-top:15px; padding:14px; background:#eef8ff; border-radius:14px; line-height:1.5; }
+.listening-status { text-align:center; color:#28764b; font-weight:900; animation:wave 1.2s infinite; }
+.mic-button { background:#6e66c8; box-shadow:0 5px 0 rgba(72,64,145,.2); }
+.mic-button:disabled { opacity:.6; }
+.conversation-help { color:var(--muted); font-size:12px; line-height:1.5; text-align:center; margin:14px 4px 0; }
