@@ -251,3 +251,42 @@ button:focus-visible { outline: 3px solid #7568c8; outline-offset: 3px; }
 .mic-button { background:#6e66c8; box-shadow:0 5px 0 rgba(72,64,145,.2); }
 .mic-button:disabled { opacity:.6; }
 .conversation-help { color:var(--muted); font-size:12px; line-height:1.5; text-align:center; margin:14px 4px 0; }
+
+
+/* Home: all activities are grouped inside the orange welcome card */
+.welcome-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "copy fox" "activities activities";
+  align-items: center;
+  gap: 14px 18px;
+  min-height: 0;
+}
+.welcome-copy { grid-area: copy; }
+.welcome-card .fox-mascot { grid-area: fox; }
+.welcome-card .activity-grid {
+  grid-area: activities;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 2px;
+}
+.welcome-card .activity-card {
+  min-height: 104px;
+  padding: 13px 12px;
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(255,255,255,.55);
+}
+.welcome-card .activity-card small { color: #77636a; }
+@media (max-width: 600px) {
+  .welcome-card { min-height: 0; padding: 22px 17px; gap: 12px; }
+  .welcome-card .fox-mascot { font-size: 76px; margin: 0; }
+  .welcome-card .activity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .welcome-card .activity-card { min-height: 88px; padding: 11px 12px; }
+  .welcome-card .activity-card > span { font-size: 25px; }
+  .welcome-card .activity-card strong { font-size: 14px; }
+  .welcome-card .activity-card small { font-size: 11px; }
+}
+@media (max-width: 370px) {
+  .welcome-card { padding: 18px 13px; }
+  .welcome-card .fox-mascot { font-size: 64px; }
+}
