@@ -314,24 +314,24 @@ function conversationReply(themeKey, index, transcript) {
   if (!age) Object.keys(ageWords).some(function(word){ if (new RegExp("\\b"+word+"\\b").test(text)) { age=ageWords[word]; return true; } return false; });
 
   if (themeKey === "introduce") {
-    if (index === 0) return age === 6 ? "I'm 6 too! What's your name?" : age ? "I'm 6! You're " + age + "! What's your name?" : "I'm 6! And what's your name?";
+    if (index === 0) return age === 6 ? "I'm 6 too!" : age ? "I'm 6! You're " + age + "!" : "I'm 6 too!";
     if (index === 1) {
       const nameMatch = transcript.match(/(?:my name is|i am|i'm|this is|it's)\s+([a-z][a-z'-]*)/i);
       let name = nameMatch ? nameMatch[1] : transcript.trim().split(/\s+/)[0];
       name = (name || "").replace(/[^a-z'-]/gi, "");
       if (/^(my|name|is|i|am|hello|hi|it's|this)$/i.test(name)) name = "";
-      return name ? "Nice to meet you, " + name + "! What do you like?" : "Nice to meet you! What do you like?";
+      return name ? "Nice to meet you, " + name + "!" : "Nice to meet you!";
     }
     const likes = [{match:"cat",reply:"cats"},{match:"dog",reply:"dogs"},{match:"panda",reply:"pandas"},{match:"dinosaur",reply:"dinosaurs"},{match:"music",reply:"music"},{match:"dance",reply:"dancing"},{match:"draw",reply:"drawing"},{match:"football",reply:"football"},{match:"chocolate",reply:"chocolate"},{match:"ice cream",reply:"ice cream"},{match:"read",reply:"reading"}];
     const like = likes.find(function(item){ return text.includes(item.match); });
-    return like ? "I like " + like.reply + " too! It was lovely talking to you!" : "That sounds fun! I like having fun too! Well done!";
+    return like ? "I like " + like.reply + " too! That's great!" : "That sounds fun! I like having fun too!";
   }
 
-  if (index === 0) return "I'm great, thank you! What's your favourite animal?";
+  if (index === 0) return "I'm great, thank you!";
   if (index === 1) {
     const animals = ["cats","dogs","lions","rabbits","pandas","horses","bears","tigers","elephants","dolphins"];
     const animal = animals.find(function(item){ return text.includes(item) || text.includes(item.replace(/s$/, "")); });
-    return animal ? "I love " + animal + " too! What colour do you like?" : "That's a lovely choice! What colour do you like?";
+    return animal ? "I love " + animal + " too!" : "That's a lovely choice!";
   }
   const colors = ["blue","red","green","pink","purple","yellow","orange","black","white"];
   const color = colors.find(function(item){ return new RegExp("\\b"+item+"\\b").test(text); });
