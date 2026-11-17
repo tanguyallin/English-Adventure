@@ -115,9 +115,11 @@ function refreshSpeechVoices() {
       return voice.lang && voice.lang.toLowerCase().startsWith(prefix);
     });
     return matches.find(function (voice) {
+      return /google/i.test(voice.name) && voice.lang.toLowerCase() === language.toLowerCase();
+    }) || matches.find(function (voice) {
       return voice.lang.toLowerCase() === language.toLowerCase() && voice.localService;
     }) || matches.find(function (voice) {
-      return voice.localService;
+      return /google/i.test(voice.name);
     }) || matches.find(function (voice) {
       return voice.lang.toLowerCase() === language.toLowerCase();
     }) || matches[0] || null;
@@ -130,7 +132,7 @@ function makeSpeechUtterance(text, language, rate) {
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = language;
   utterance.rate = rate;
-  utterance.pitch = language === "fr-FR" ? 1 : 1.08;
+  utterance.pitch = 1;
   utterance.volume = 1;
 
   // Prefer an already-installed voice to avoid slow online voice loading.
@@ -158,7 +160,7 @@ function speakWithLanguage(text, language, rate, cancelCurrent) {
     showToast("La lecture audio n'est pas disponible sur cet appareil.");
     return;
   }
-  refreshSpeechVoices();
+  // Voices are selected once at startup / voiceschanged; do not query Android on every tap.
   // Avoid cancel() when the speech queue is already idle: Android can add startup latency.
   if (cancelCurrent && (window.speechSynthesis.speaking || window.speechSynthesis.pending)) {
     window.speechSynthesis.cancel();
@@ -166,6 +168,24 @@ function speakWithLanguage(text, language, rate, cancelCurrent) {
   const utterance = makeSpeechUtterance(text, language, rate);
   window.speechSynthesis.speak(utterance);
 }
+
+
+let speechEngineWarmed = false;
+function warmSpeechEngine() {
+  if (speechEngineWarmed || !("speechSynthesis" in window)) return;
+  speechEngineWarmed = true;
+  try {
+    const warmup = new SpeechSynthesisUtterance(" ");
+    warmup.lang = preferredEnglishVoice ? preferredEnglishVoice.lang : "en-GB";
+    warmup.volume = 0;
+    warmup.rate = 10;
+    window.speechSynthesis.speak(warmup);
+  } catch (error) {
+    // The first real utterance will initialize speech synthesis if warm-up is unsupported.
+  }
+}
+
+document.addEventListener("pointerdown", warmSpeechEngine, { once: true, passive: true });
 
 function speak(word) {
   speakWithLanguage(word, "en-GB", 0.9, true);
