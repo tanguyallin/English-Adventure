@@ -84,7 +84,7 @@ const DEFAULT_STATE = {
   reviewWords: [],
   bestScore: 0,
   sessions: 0,
-  parentPin: "2468",
+  parentPin: "1612",
   soundEnabled: true
 };
 
@@ -92,6 +92,7 @@ function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
     const migrated = Object.assign({}, saved);
+    if (migrated.parentPin === "2468") migrated.parentPin = "1612";
     if (typeof migrated.diamonds !== "number") migrated.diamonds = Number(migrated.stars) || 0;
     delete migrated.stars;
     return Object.assign({}, DEFAULT_STATE, migrated, {
