@@ -172,7 +172,7 @@ function renderPlay() {
 }
 
 function renderListen() {
-  return '<section class="page-intro"><span class="eyebrow">J'ÉCOUTE ET JE RÉPÈTE</span><h1>Les mots à l\'oreille 🎧</h1><p>Touche une carte pour écouter le mot en anglais. À toi de le répéter !</p></section>' +
+  return '<section class="page-intro"><span class="eyebrow">J\'ÉCOUTE ET JE RÉPÈTE</span><h1>Les mots à l\'oreille 🎧</h1><p>Touche une carte pour écouter le mot en anglais. À toi de le répéter !</p></section>' +
     '<div class="listen-group"><h2>🌈 Les couleurs</h2><div class="listen-grid">' + LESSONS.colors.words.map(wordCard).join("") + '</div></div>' +
     '<div class="listen-group"><h2>🐾 Les animaux</h2><div class="listen-grid">' + LESSONS.animals.words.map(wordCard).join("") + '</div></div>';
 }
