@@ -80,6 +80,7 @@ const ALL_WORDS = Object.keys(LESSONS).flatMap(function (key) {
 const DEFAULT_STATE = {
   diamonds: 0,
   completedLessons: [],
+  completedGames: [],
   wordsLearned: [],
   reviewWords: [],
   bestScore: 0,
@@ -97,6 +98,7 @@ function loadState() {
     delete migrated.stars;
     return Object.assign({}, DEFAULT_STATE, migrated, {
       completedLessons: Array.isArray(saved.completedLessons) ? saved.completedLessons : [],
+      completedGames: Array.isArray(saved.completedGames) ? saved.completedGames : [],
       wordsLearned: Array.isArray(saved.wordsLearned) ? saved.wordsLearned : [],
       reviewWords: Array.isArray(saved.reviewWords) ? saved.reviewWords : []
     });
@@ -327,7 +329,7 @@ function renderPlay() {
     ["opposites","↔️","Le jeu des contraires","listen"]
   ];
   return '<section class="page-intro"><span class="eyebrow">À TOI DE JOUER</span><h1>30 petits jeux 🧩</h1><p>Choisis ton défi : chaque jeu te fait réviser un thème différent !</p></section>' +
-    games.map(function(item){return '<button class="game-mode-card '+(item[3]==="listen"?"listen-mode":"quiz-mode")+'" data-action="start-game" data-mode="'+item[3]+'" data-topic="'+item[0]+'"><span class="mode-icon">'+item[1]+'</span><span><strong>'+item[2]+'</strong><small>'+(item[3]==="listen"?"Écoute le mot et trouve la bonne réponse.":"Trouve le mot anglais correspondant.")+'</small></span><span class="mode-arrow">→</span></button>';}).join("") +
+    games.map(function(item){const done=state.completedGames.includes(item[0]);return '<button class="game-mode-card '+(item[3]==="listen"?"listen-mode":"quiz-mode")+'" data-action="start-game" data-mode="'+item[3]+'" data-topic="'+item[0]+'"><span class="mode-icon">'+item[1]+'</span><span><strong>'+item[2]+'</strong><small>'+(item[3]==="listen"?"Écoute le mot et trouve la bonne réponse.":item[3]==="reverse"?"Trouve le bon mot en français.":"Trouve le mot anglais correspondant.")+'</small></span><span class="game-status '+(done?"is-done":"is-new")+'">'+(done?"✓ Déjà fait":"À faire")+'</span></button>';}).join("") +
     '<button class="game-mode-card conversation-mode" data-action="conversation-menu"><span class="mode-icon">💬</span><span><strong>Les conversations</strong><small>Parle avec le renard dans 30 situations différentes.</small></span><span class="mode-arrow">→</span></button>' +
     '<div class="tip-card">💎 <span>Chaque bonne réponse te rapporte un diamant. Amuse-toi bien !</span></div>' +
     '<div class="best-score">🏅 Ton meilleur score : <strong>' + state.bestScore + '/6</strong></div>';
@@ -676,6 +678,7 @@ function nextQuestion() {
   if (!game) return;
   if (game.index >= game.questions.length - 1) {
     game.complete = true;
+    if (game.topic && !state.completedGames.includes(game.topic)) state.completedGames.push(game.topic);
     state.diamonds += game.correct;
     state.sessions += 1;
     state.bestScore = Math.max(state.bestScore, game.correct);
