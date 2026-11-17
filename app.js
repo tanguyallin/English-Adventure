@@ -204,9 +204,9 @@ function renderRewards() {
     { count: 20, icon: "👑", title: "Reine de l'anglais", note: "20 diamants gagnés" }
   ];
   return '<section class="page-intro"><span class="eyebrow">BRAVO À TOI !</span><h1>Mes récompenses 🏆</h1><p>Chaque bonne réponse te rapproche d\'une nouvelle récompense.</p></section>' +
-    '<div class="diamond-total"><span>💎</span><strong>' + state.stars + '</strong><small>diamants gagnés</small></div>' +
+    '<div class="diamond-total"><span>💎</span><strong>' + state.diamonds + '</strong><small>diamants gagnés</small></div>' +
     '<div class="reward-list">' + milestones.map(function (item) {
-      const unlocked = state.stars >= item.count;
+      const unlocked = state.diamonds >= item.count;
       return '<div class="reward-card ' + (unlocked ? "unlocked" : "locked") + '"><span>' + item.icon + '</span><div><strong>' + item.title + '</strong><small>' + item.note + '</small></div><b>' + (unlocked ? "✓" : "🔒") + '</b></div>';
     }).join("") + '</div>' +
     '<div class="tip-card">💛 <span>Tu progresses à ton rythme. Le plus important, c\'est d\'essayer et de s\'amuser !</span></div>';
@@ -289,7 +289,7 @@ function renderNav() {
 }
 
 function render() {
-  app.innerHTML = '<header class="topbar"><button class="brand" data-view="home"><span class="brand-icon">🦊</span><span>English <b>Adventure</b></span></button><span class="top-diamonds">💎 ' + state.stars + '</span></header>' +
+  app.innerHTML = '<header class="topbar"><button class="brand" data-view="home"><span class="brand-icon">🦊</span><span>English <b>Adventure</b></span></button><span class="top-diamonds">💎 ' + state.diamonds + '</span></header>' +
     '<main class="main-content">' + renderView() + '</main>' + renderNav();
 }
 
@@ -344,7 +344,7 @@ function nextQuestion() {
   if (!game) return;
   if (game.index >= 9) {
     game.complete = true;
-    state.stars += game.correct;
+    state.diamonds += game.correct;
     state.sessions += 1;
     state.bestScore = Math.max(state.bestScore, game.correct);
     saveState();
@@ -362,7 +362,7 @@ function completeLesson(key) {
   const firstCompletion = !state.completedLessons.includes(key);
   if (firstCompletion) {
     state.completedLessons.push(key);
-    state.stars += 2;
+    state.diamonds += 2;
   }
   LESSONS[key].words.forEach(function (item) {
     if (!state.wordsLearned.includes(item.word)) state.wordsLearned.push(item.word);
