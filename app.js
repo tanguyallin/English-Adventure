@@ -214,7 +214,7 @@ function renderParents() {
     '<div class="parent-stats"><div><strong>' + state.sessions + '</strong><small>jeux terminés</small></div><div><strong>' + state.wordsLearned.length + '</strong><small>mots écoutés / appris</small></div><div><strong>' + state.bestScore + '/10</strong><small>meilleur score</small></div></div>' +
     '<div class="parent-card"><h2>🔊 Son et prononciation</h2><p>Les mots sont prononcés avec une voix anglaise lorsque l\'appareil le permet.</p><button class="setting-button" data-action="toggle-sound">' + (state.soundEnabled ? "🔊 Son activé" : "🔇 Son désactivé") + '</button></div>' +
     '<div class="parent-card"><h2>🔑 Code parent</h2><p>Change le code utilisé pour ouvrir cet espace.</p><button class="setting-button" data-action="change-pin">Modifier le code</button></div>' +
-    '<div class="parent-card danger-zone"><h2>♻️ Recommencer</h2><p>Efface les étoiles et la progression enregistrées sur cette tablette.</p><button class="setting-button danger-button" data-action="reset">Réinitialiser la progression</button></div>' +
+    '<div class="parent-card danger-zone"><h2>♻️ Recommencer</h2><p>Efface les diamants et la progression enregistrés sur cette tablette.</p><button class="setting-button danger-button" data-action="reset">Réinitialiser la progression</button></div>' +
     '<p class="parent-disclaimer">Le code parent évite les ouvertures accidentelles, mais il ne remplace pas un véritable verrouillage de sécurité.</p>';
 }
 
@@ -414,7 +414,7 @@ function handleAction(action, target) {
     showToast("Nouveau code enregistré.");
   }
   if (action === "reset") {
-    if (window.confirm("Effacer toutes les étoiles et toute la progression sur cette tablette ?")) {
+    if (window.confirm("Effacer tous les diamants et toute la progression sur cette tablette ?")) {
       state = Object.assign({}, DEFAULT_STATE, { parentPin: state.parentPin });
       saveState();
       activeView = "home";
