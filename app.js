@@ -690,7 +690,6 @@ function nextQuestion() {
   game.answered = false;
   game.selected = -1;
   render();
-  readGameInstruction();
 }
 
 function completeLesson(key) {
