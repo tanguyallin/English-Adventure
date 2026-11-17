@@ -133,28 +133,25 @@ function renderHome() {
     '<div class="welcome-copy"><span class="eyebrow">TA PETITE AVENTURE ANGLAISE</span>' +
     '<h1>Hello ! <span class="wave">👋</span></h1>' +
     '<p>Prête à apprendre de nouveaux mots avec moi ?</p>' +
-    '<div class="session-note">⏱️ Une petite aventure de 10 à 15 minutes</div>' +
-    '<button class="primary-button" data-view="learn">C\'est parti ! <span>→</span></button></div>' +
+    '<div class="session-note">⏱️ Une petite aventure de 10 à 15 minutes</div></div>' +
     '<div class="fox-mascot" aria-label="Petit renard">🦊<span>✨</span></div>' +
-    '</section>' +
-    '<section class="quick-stats">' +
-    '<div class="stat-card"><span class="stat-icon">💎</span><strong>' + state.diamonds + '</strong><small>diamants</small></div>' +
-    '<div class="stat-card"><span class="stat-icon">📚</span><strong>' + state.completedLessons.length + '/2</strong><small>leçons terminées</small></div>' +
-    '<div class="stat-card"><span class="stat-icon">🗣️</span><strong>' + state.wordsLearned.length + '</strong><small>mots découverts</small></div>' +
-    '</section>' +
-    '<section class="section-block"><div class="section-heading"><div><span class="eyebrow">ON CONTINUE ?</span><h2>Choisis ton activité</h2></div><span class="heading-emoji">🎈</span></div>' +
     '<div class="activity-grid">' +
     '<button class="activity-card peach" data-view="learn"><span>📖</span><strong>Apprendre</strong><small>Découvre les mots</small></button>' +
     '<button class="activity-card lavender" data-view="play"><span>🧩</span><strong>Jouer</strong><small>Teste tes connaissances</small></button>' +
-    '<button class="activity-card mint" data-view="listen"><span>🎧</span><strong>Écouter</strong><small>Reconnais les sons</small></button>' +
+    '<button class="activity-card mint" data-action="conversation-menu"><span>💬</span><strong>Conversation</strong><small>Parle avec le renard</small></button>' +
     '<button class="activity-card butter" data-view="rewards"><span>🏆</span><strong>Mes diamants</strong><small>Regarde tes progrès</small></button>' +
-    '</div></section>' +
+    '</div>' +
+    '</section>' +
+    '<section class="quick-stats">' +
+    '<div class="stat-card"><span class="stat-icon">💎</span><strong>' + state.diamonds + '</strong><small>diamants</small></div>' +
+    '<div class="stat-card"><span class="stat-icon">📚</span><strong>' + state.completedLessons.length + '/' + Object.keys(LESSONS).length + '</strong><small>leçons terminées</small></div>' +
+    '<div class="stat-card"><span class="stat-icon">🗣️</span><strong>' + state.wordsLearned.length + '</strong><small>mots découverts</small></div>' +
+    '</section>' +
     '<section class="progress-panel"><div class="progress-title"><strong>Mon aventure</strong><span>' + progressPercent() + '%</span></div>' +
     '<div class="progress-track"><span style="width:' + progressPercent() + '%"></span></div>' +
     '<p>Chaque mot appris te fait grandir. Bravo ! 💛</p></section>' +
     (deferredInstallPrompt ? '<button class="install-button" data-action="install">📲 Installer sur cette tablette</button>' : '');
 }
-
 function renderLearn() {
   return '<section class="page-intro"><span class="eyebrow">JE DÉCOUVRE</span><h1>Apprendre 📚</h1><p>Choisis une leçon. Écoute bien et répète les mots en anglais !</p></section>' +
     '<div class="lesson-list">' + Object.keys(LESSONS).map(function (key) {
