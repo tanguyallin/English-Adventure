@@ -188,7 +188,7 @@ function renderRewards() {
     { count: 10, icon: "🦄", title: "Super championne", note: "10 étoiles gagnées" },
     { count: 20, icon: "👑", title: "Reine de l'anglais", note: "20 étoiles gagnées" }
   ];
-  return '<section class="page-intro"><span class="eyebrow">BRAVO À TOI !</span><h1>Mes récompenses 🏆</h1><p>Chaque bonne réponse te rapproche d'une nouvelle récompense.</p></section>' +
+  return '<section class="page-intro"><span class="eyebrow">BRAVO À TOI !</span><h1>Mes récompenses 🏆</h1><p>Chaque bonne réponse te rapproche d\'une nouvelle récompense.</p></section>' +
     '<div class="star-total"><span>⭐</span><strong>' + state.stars + '</strong><small>étoiles gagnées</small></div>' +
     '<div class="reward-list">' + milestones.map(function (item) {
       const unlocked = state.stars >= item.count;
