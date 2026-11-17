@@ -166,13 +166,13 @@ function renderLesson() {
 function renderPlay() {
   return '<section class="page-intro"><span class="eyebrow">À TOI DE JOUER</span><h1>Les petits jeux 🧩</h1><p>10 questions pour gagner des étoiles. Tu peux recommencer autant de fois que tu veux !</p></section>' +
     '<button class="game-mode-card quiz-mode" data-action="start-game" data-mode="quiz"><span class="mode-icon">🧠</span><span><strong>Le quiz des mots</strong><small>Lis le mot français et trouve son nom anglais.</small></span><span class="mode-arrow">→</span></button>' +
-    '<button class="game-mode-card listen-mode" data-action="start-game" data-mode="listen"><span class="mode-icon">🎧</span><span><strong>L'oreille magique</strong><small>Écoute le mot anglais et choisis la bonne image.</small></span><span class="mode-arrow">→</span></button>' +
+    '<button class="game-mode-card listen-mode" data-action="start-game" data-mode="listen"><span class="mode-icon">🎧</span><span><strong>L\'oreille magique</strong><small>Écoute le mot anglais et choisis la bonne image.</small></span><span class="mode-arrow">→</span></button>' +
     '<div class="tip-card">⭐ <span>Une bonne réponse = une étoile à la fin du jeu. Il y a 10 questions !</span></div>' +
     '<div class="best-score">🏅 Ton meilleur score : <strong>' + state.bestScore + '/10</strong></div>';
 }
 
 function renderListen() {
-  return '<section class="page-intro"><span class="eyebrow">J'ÉCOUTE ET JE RÉPÈTE</span><h1>Les mots à l'oreille 🎧</h1><p>Touche une carte pour écouter le mot en anglais. À toi de le répéter !</p></section>' +
+  return '<section class="page-intro"><span class="eyebrow">J'ÉCOUTE ET JE RÉPÈTE</span><h1>Les mots à l\'oreille 🎧</h1><p>Touche une carte pour écouter le mot en anglais. À toi de le répéter !</p></section>' +
     '<div class="listen-group"><h2>🌈 Les couleurs</h2><div class="listen-grid">' + LESSONS.colors.words.map(wordCard).join("") + '</div></div>' +
     '<div class="listen-group"><h2>🐾 Les animaux</h2><div class="listen-grid">' + LESSONS.animals.words.map(wordCard).join("") + '</div></div>';
 }
