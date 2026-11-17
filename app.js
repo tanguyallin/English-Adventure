@@ -335,6 +335,10 @@ function wordCard(item) {
 
 function renderRewards() {
   const milestones = [
+    {"count":1,"icon":"💎","title":"Premier diamant","note":"Tu as commencé ton aventure !"},
+    {"count":5,"icon":"🦋","title":"Petite exploratrice","note":"5 diamants gagnés"},
+    {"count":10,"icon":"🦄","title":"Super championne","note":"10 diamants gagnés"},
+    {"count":20,"icon":"👑","title":"Reine de l'anglais","note":"20 diamants gagnés"},
     {"count":15,"icon":"🦊","title":"Amie du renard","note":"15 diamants gagnés"},
     {"count":25,"icon":"🌟","title":"Petite étoile","note":"25 diamants gagnés"},
     {"count":35,"icon":"🐝","title":"Abeille travailleuse","note":"35 diamants gagnés"},
