@@ -194,13 +194,13 @@ function renderRewards() {
       const unlocked = state.stars >= item.count;
       return '<div class="reward-card ' + (unlocked ? "unlocked" : "locked") + '"><span>' + item.icon + '</span><div><strong>' + item.title + '</strong><small>' + item.note + '</small></div><b>' + (unlocked ? "✓" : "🔒") + '</b></div>';
     }).join("") + '</div>' +
-    '<div class="tip-card">💛 <span>Tu progresses à ton rythme. Le plus important, c'est d'essayer et de s'amuser !</span></div>';
+    '<div class="tip-card">💛 <span>Tu progresses à ton rythme. Le plus important, c\'est d\'essayer et de s\'amuser !</span></div>';
 }
 
 function renderParents() {
   return '<section class="page-intro"><span class="eyebrow">ESPACE FAMILLE</span><h1>Espace parents 🔐</h1><p>Un petit aperçu des progrès et quelques réglages.</p></section>' +
     '<div class="parent-stats"><div><strong>' + state.sessions + '</strong><small>jeux terminés</small></div><div><strong>' + state.wordsLearned.length + '</strong><small>mots écoutés / appris</small></div><div><strong>' + state.bestScore + '/10</strong><small>meilleur score</small></div></div>' +
-    '<div class="parent-card"><h2>🔊 Son et prononciation</h2><p>Les mots sont prononcés avec une voix anglaise lorsque l'appareil le permet.</p><button class="setting-button" data-action="toggle-sound">' + (state.soundEnabled ? "🔊 Son activé" : "🔇 Son désactivé") + '</button></div>' +
+    '<div class="parent-card"><h2>🔊 Son et prononciation</h2><p>Les mots sont prononcés avec une voix anglaise lorsque l\'appareil le permet.</p><button class="setting-button" data-action="toggle-sound">' + (state.soundEnabled ? "🔊 Son activé" : "🔇 Son désactivé") + '</button></div>' +
     '<div class="parent-card"><h2>🔑 Code parent</h2><p>Change le code utilisé pour ouvrir cet espace.</p><button class="setting-button" data-action="change-pin">Modifier le code</button></div>' +
     '<div class="parent-card danger-zone"><h2>♻️ Recommencer</h2><p>Efface les étoiles et la progression enregistrées sur cette tablette.</p><button class="setting-button danger-button" data-action="reset">Réinitialiser la progression</button></div>' +
     '<p class="parent-disclaimer">Le code parent évite les ouvertures accidentelles, mais il ne remplace pas un véritable verrouillage de sécurité.</p>';
