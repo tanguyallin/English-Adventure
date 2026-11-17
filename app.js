@@ -34,7 +34,7 @@ const ALL_WORDS = Object.keys(LESSONS).flatMap(function (key) {
 });
 
 const DEFAULT_STATE = {
-  stars: 0,
+  diamonds: 0,
   completedLessons: [],
   wordsLearned: [],
   bestScore: 0,
@@ -46,7 +46,10 @@ const DEFAULT_STATE = {
 function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-    return Object.assign({}, DEFAULT_STATE, saved, {
+    const migrated = Object.assign({}, saved);
+    if (typeof migrated.diamonds !== "number") migrated.diamonds = Number(migrated.stars) || 0;
+    delete migrated.stars;
+    return Object.assign({}, DEFAULT_STATE, migrated, {
       completedLessons: Array.isArray(saved.completedLessons) ? saved.completedLessons : [],
       wordsLearned: Array.isArray(saved.wordsLearned) ? saved.wordsLearned : []
     });
@@ -133,7 +136,7 @@ function renderHome() {
     '<div class="fox-mascot" aria-label="Petit renard">🦊<span>✨</span></div>' +
     '</section>' +
     '<section class="quick-stats">' +
-    '<div class="stat-card"><span class="stat-icon">💎</span><strong>' + state.stars + '</strong><small>diamants</small></div>' +
+    '<div class="stat-card"><span class="stat-icon">💎</span><strong>' + state.diamonds + '</strong><small>diamants</small></div>' +
     '<div class="stat-card"><span class="stat-icon">📚</span><strong>' + state.completedLessons.length + '/2</strong><small>leçons terminées</small></div>' +
     '<div class="stat-card"><span class="stat-icon">🗣️</span><strong>' + state.wordsLearned.length + '</strong><small>mots découverts</small></div>' +
     '</section>' +
