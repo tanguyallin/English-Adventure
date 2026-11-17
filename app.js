@@ -26,7 +26,31 @@ const LESSONS = {
       { word: "Frog", fr: "grenouille", emoji: "🐸" },
       { word: "Lion", fr: "lion", emoji: "🦁" }
     ]
-  }
+  },
+  numbers: { title: "Les nombres", subtitle: "Compte de 1 à 10 en anglais !", icon: "🔢", words: [
+    {word:"One",fr:"un",emoji:"1️⃣"},{word:"Two",fr:"deux",emoji:"2️⃣"},{word:"Three",fr:"trois",emoji:"3️⃣"},{word:"Four",fr:"quatre",emoji:"4️⃣"},{word:"Five",fr:"cinq",emoji:"5️⃣"},{word:"Six",fr:"six",emoji:"6️⃣"}
+  ]},
+  fruits: { title: "Les fruits", subtitle: "Découvre de délicieux fruits !", icon: "🍎", words: [
+    {word:"Apple",fr:"pomme",emoji:"🍎"},{word:"Banana",fr:"banane",emoji:"🍌"},{word:"Strawberry",fr:"fraise",emoji:"🍓"},{word:"Orange",fr:"orange",emoji:"🍊"},{word:"Pear",fr:"poire",emoji:"🍐"},{word:"Grapes",fr:"raisins",emoji:"🍇"}
+  ]},
+  family: { title: "La famille", subtitle: "Présente les personnes de ta famille !", icon: "👨‍👩‍👧", words: [
+    {word:"Mother",fr:"maman",emoji:"👩"},{word:"Father",fr:"papa",emoji:"👨"},{word:"Sister",fr:"sœur",emoji:"👧"},{word:"Brother",fr:"frère",emoji:"👦"},{word:"Baby",fr:"bébé",emoji:"👶"},{word:"Grandmother",fr:"grand-mère",emoji:"👵"}
+  ]},
+  body: { title: "Le corps", subtitle: "Apprends les parties du corps !", icon: "🧍", words: [
+    {word:"Head",fr:"tête",emoji:"🙂"},{word:"Eyes",fr:"yeux",emoji:"👀"},{word:"Nose",fr:"nez",emoji:"👃"},{word:"Mouth",fr:"bouche",emoji:"👄"},{word:"Hands",fr:"mains",emoji:"🙌"},{word:"Feet",fr:"pieds",emoji:"🦶"}
+  ]},
+  food: { title: "La nourriture", subtitle: "Miam ! Voici des aliments en anglais.", icon: "🥪", words: [
+    {word:"Bread",fr:"pain",emoji:"🍞"},{word:"Cheese",fr:"fromage",emoji:"🧀"},{word:"Milk",fr:"lait",emoji:"🥛"},{word:"Egg",fr:"œuf",emoji:"🥚"},{word:"Cake",fr:"gâteau",emoji:"🍰"},{word:"Water",fr:"eau",emoji:"💧"}
+  ]},
+  school: { title: "L'école", subtitle: "Les objets de ta classe en anglais !", icon: "🎒", words: [
+    {word:"Book",fr:"livre",emoji:"📘"},{word:"Pencil",fr:"crayon",emoji:"✏️"},{word:"Schoolbag",fr:"cartable",emoji:"🎒"},{word:"Ruler",fr:"règle",emoji:"📏"},{word:"Pen",fr:"stylo",emoji:"🖊️"},{word:"Desk",fr:"bureau",emoji:"🪑"}
+  ]},
+  weather: { title: "La météo", subtitle: "Quel temps fait-il aujourd'hui ?", icon: "🌤️", words: [
+    {word:"Sun",fr:"soleil",emoji:"☀️"},{word:"Rain",fr:"pluie",emoji:"🌧️"},{word:"Cloud",fr:"nuage",emoji:"☁️"},{word:"Wind",fr:"vent",emoji:"💨"},{word:"Snow",fr:"neige",emoji:"❄️"},{word:"Rainbow",fr:"arc-en-ciel",emoji:"🌈"}
+  ]},
+  clothes: { title: "Les vêtements", subtitle: "Habille-toi et apprends les mots !", icon: "👕", words: [
+    {word:"T-shirt",fr:"tee-shirt",emoji:"👕"},{word:"Shoes",fr:"chaussures",emoji:"👟"},{word:"Hat",fr:"chapeau",emoji:"🧢"},{word:"Dress",fr:"robe",emoji:"👗"},{word:"Coat",fr:"manteau",emoji:"🧥"},{word:"Socks",fr:"chaussettes",emoji:"🧦"}
+  ]}
 };
 
 const ALL_WORDS = Object.keys(LESSONS).flatMap(function (key) {
@@ -178,14 +202,19 @@ function renderLesson() {
 }
 
 function renderPlay() {
-  return '<section class="page-intro"><span class="eyebrow">À TOI DE JOUER</span><h1>Les petits jeux 🧩</h1><p>10 questions pour gagner des diamants. Tu peux recommencer autant de fois que tu veux !</p></section>' +
-    '<button class="game-mode-card quiz-mode" data-action="start-game" data-mode="quiz"><span class="mode-icon">🧠</span><span><strong>Le quiz des mots</strong><small>Lis le mot français et trouve son nom anglais.</small></span><span class="mode-arrow">→</span></button>' +
-    '<button class="game-mode-card listen-mode" data-action="start-game" data-mode="listen"><span class="mode-icon">🎧</span><span><strong>L\'oreille magique</strong><small>Écoute le mot anglais et choisis la bonne image.</small></span><span class="mode-arrow">→</span></button>' +
-    '<button class="game-mode-card conversation-mode" data-action="conversation-menu"><span class="mode-icon">💬</span><span><strong>On discute en anglais !</strong><small>Fais 3 échanges avec le petit renard.</small></span><span class="mode-arrow">→</span></button>' +
-    '<div class="tip-card">💎 <span>Une bonne réponse = un diamant à la fin du jeu. Il y a 10 questions !</span></div>' +
-    '<div class="best-score">🏅 Ton meilleur score : <strong>' + state.bestScore + '/10</strong></div>';
+  const games = [
+    ["colors","🌈","Le défi des couleurs","quiz"],["animals","🐾","Le safari des animaux","listen"],
+    ["numbers","🔢","Les chiffres malins","quiz"],["fruits","🍓","Le panier de fruits","listen"],
+    ["family","👨‍👩‍👧","La famille en anglais","quiz"],["body","🧍","Le corps en action","listen"],
+    ["food","🥪","Le menu gourmand","quiz"],["school","🎒","Le cartable magique","listen"],
+    ["weather","🌦️","La météo rigolote","quiz"],["clothes","👕","Le dressing anglais","listen"]
+  ];
+  return '<section class="page-intro"><span class="eyebrow">À TOI DE JOUER</span><h1>10 petits jeux 🧩</h1><p>Choisis ton défi : chaque jeu te fait réviser un thème différent !</p></section>' +
+    games.map(function(item){return '<button class="game-mode-card '+(item[3]==="listen"?"listen-mode":"quiz-mode")+'" data-action="start-game" data-mode="'+item[3]+'" data-topic="'+item[0]+'"><span class="mode-icon">'+item[1]+'</span><span><strong>'+item[2]+'</strong><small>'+(item[3]==="listen"?"Écoute le mot et trouve la bonne réponse.":"Trouve le mot anglais correspondant.")+'</small></span><span class="mode-arrow">→</span></button>';}).join("") +
+    '<button class="game-mode-card conversation-mode" data-action="conversation-menu"><span class="mode-icon">💬</span><span><strong>Les conversations</strong><small>Parle avec le renard dans 10 situations différentes.</small></span><span class="mode-arrow">→</span></button>' +
+    '<div class="tip-card">💎 <span>Chaque bonne réponse te rapporte un diamant. Amuse-toi bien !</span></div>' +
+    '<div class="best-score">🏅 Ton meilleur score : <strong>' + state.bestScore + '/6</strong></div>';
 }
-
 function renderListen() {
   return '<section class="page-intro"><span class="eyebrow">J\'ÉCOUTE ET JE RÉPÈTE</span><h1>Les mots à l\'oreille 🎧</h1><p>Touche une carte pour écouter le mot en anglais. À toi de le répéter !</p></section>' +
     Object.keys(LESSONS).map(function(key){ return '<div class="listen-group"><h2>' + LESSONS[key].icon + ' ' + LESSONS[key].title + '</h2><div class="listen-grid">' + LESSONS[key].words.map(wordCard).join("") + '</div></div>'; }).join("");
@@ -237,7 +266,7 @@ function renderGame() {
   if (!game) return renderPlay();
   if (game.complete) {
     const message = game.correct === 10 ? "Incroyable ! Un sans-faute ! 🎉" : game.correct >= 7 ? "Super travail ! Tu progresses très bien ! 💎" : "Bravo d'avoir essayé ! On recommence quand tu veux. 💛";
-    return '<section class="result-card"><div class="result-confetti">🎉 💎 🎈</div><span class="eyebrow">JEU TERMINÉ</span><h1>' + message + '</h1><div class="score-circle"><strong>' + game.correct + '</strong><small>/ 10</small></div><p>Tu gagnes <strong>' + game.correct + ' diamants</strong> !</p><button class="primary-button full-button" data-action="start-game" data-mode="' + game.mode + '">Rejouer 🔁</button><button class="secondary-button full-button" data-view="play">Retour aux jeux</button></section>';
+    return '<section class="result-card"><div class="result-confetti">🎉 💎 🎈</div><span class="eyebrow">JEU TERMINÉ</span><h1>' + message + '</h1><div class="score-circle"><strong>' + game.correct + '</strong><small>/ 10</small></div><p>Tu gagnes <strong>' + game.correct + ' diamants</strong> !</p><button class="primary-button full-button" data-action="start-game" data-mode="' + game.mode + '" data-topic="' + (game.topic || '') + '">Rejouer 🔁</button><button class="secondary-button full-button" data-view="play">Retour aux jeux</button></section>';
   }
   const question = game.questions[game.index];
   const progress = Math.round((game.index / game.questions.length) * 100);
@@ -257,23 +286,24 @@ function renderGame() {
         (game.mode === "quiz" ? '<strong>' + option.word + '</strong>' : '<span class="answer-emoji">' + option.emoji + '</span><strong>' + option.fr + '</strong>') + '</button>';
     }).join("") + '</div>' +
     (game.answered
-      ? '<div class="answer-feedback ' + (game.lastCorrect ? "good" : "try-again") + '">' + (game.lastCorrect ? "Bravo, bonne réponse ! 💎" : "Bien essayé ! La bonne réponse était " + question.item.word + ".") + '</div><button class="primary-button full-button" data-action="next-question">' + (game.index === 9 ? "Voir mon résultat" : "Question suivante →") + '</button>'
+      ? '<div class="answer-feedback ' + (game.lastCorrect ? "good" : "try-again") + '">' + (game.lastCorrect ? "Bravo, bonne réponse ! 💎" : "Bien essayé ! La bonne réponse était " + question.item.word + ".") + '</div><button class="primary-button full-button" data-action="next-question">' + (game.index === game.questions.length - 1 ? "Voir mon résultat" : "Question suivante →") + '</button>'
       : '<button class="primary-button full-button validate-button" data-action="validate-answer"' + (game.selected < 0 ? " disabled" : "") + '>Valider ma réponse ✓</button>') +
     '</section>';
 }
 
 
 const CONVERSATION_THEMES = {
-  introduce: { title: "Je me présente", icon: "👋", turns: [
-    { prompt: "How old are you?", french: "Quel âge as-tu ?" },
-    { prompt: "What's your name?", french: "Comment tu t'appelles ?" },
-    { prompt: "What do you like?", french: "Qu'est-ce que tu aimes ?" }
-  ]},
-  meeting: { title: "Faire connaissance", icon: "🐻", turns: [
-    { prompt: "Hello! How are you today?", french: "Bonjour ! Comment vas-tu aujourd'hui ?" },
-    { prompt: "What's your favourite animal?", french: "Quel est ton animal préféré ?" },
-    { prompt: "What colour do you like?", french: "Quelle couleur aimes-tu ?" }
-  ]}
+  introduce:{title:"Je me présente",icon:"👋",turns:[{prompt:"How old are you?",french:"Quel âge as-tu ?"},{prompt:"What's your name?",french:"Comment tu t'appelles ?"},{prompt:"What do you like?",french:"Qu'est-ce que tu aimes ?"}]},
+  meeting:{title:"Faire connaissance",icon:"🐻",turns:[{prompt:"Hello! How are you today?",french:"Bonjour ! Comment vas-tu aujourd'hui ?"},{prompt:"What's your favourite animal?",french:"Quel est ton animal préféré ?"},{prompt:"What colour do you like?",french:"Quelle couleur aimes-tu ?"}]},
+  family:{title:"Ma famille",icon:"👨‍👩‍👧",turns:[{prompt:"Have you got a brother or a sister?",french:"As-tu un frère ou une sœur ?"},{prompt:"What's your mum's name?",french:"Comment s'appelle ta maman ?"},{prompt:"Do you love your family?",french:"Aimes-tu ta famille ?"}]},
+  pets:{title:"Mes animaux",icon:"🐶",turns:[{prompt:"Do you have a pet?",french:"As-tu un animal ?"},{prompt:"What's its name?",french:"Comment s'appelle-t-il ?"},{prompt:"Is it big or small?",french:"Est-il grand ou petit ?"}]},
+  food:{title:"À table !",icon:"🍎",turns:[{prompt:"Are you hungry?",french:"As-tu faim ?"},{prompt:"What's your favourite food?",french:"Quel est ton plat préféré ?"},{prompt:"Do you like apples?",french:"Aimes-tu les pommes ?"}]},
+  school:{title:"À l'école",icon:"🎒",turns:[{prompt:"Do you like school?",french:"Aimes-tu l'école ?"},{prompt:"What's your favourite subject?",french:"Quelle est ta matière préférée ?"},{prompt:"Do you like drawing?",french:"Aimes-tu dessiner ?"}]},
+  hobbies:{title:"Mes loisirs",icon:"⚽",turns:[{prompt:"What do you do for fun?",french:"Qu'aimes-tu faire pour t'amuser ?"},{prompt:"Do you like sports?",french:"Aimes-tu le sport ?"},{prompt:"Can you dance?",french:"Sais-tu danser ?"}]},
+  home:{title:"À la maison",icon:"🏠",turns:[{prompt:"Where do you live?",french:"Où habites-tu ?"},{prompt:"What's your favourite room?",french:"Quelle est ta pièce préférée ?"},{prompt:"Do you have a garden?",french:"As-tu un jardin ?"}]},
+  weather:{title:"La météo",icon:"🌤️",turns:[{prompt:"What's the weather like today?",french:"Quel temps fait-il aujourd'hui ?"},{prompt:"Do you like the sun?",french:"Aimes-tu le soleil ?"},{prompt:"Do you like playing in the rain?",french:"Aimes-tu jouer sous la pluie ?"}]},
+  colours:{title:"Mes couleurs",icon:"🎨",turns:[{prompt:"What's your favourite colour?",french:"Quelle est ta couleur préférée ?"},{prompt:"Can you see something red?",french:"Vois-tu quelque chose de rouge ?"},{prompt:"Do you like blue?",french:"Aimes-tu le bleu ?"}]},
+  day:{title:"Ma journée",icon:"🌞",turns:[{prompt:"When do you wake up?",french:"À quelle heure te réveilles-tu ?"},{prompt:"What do you eat for breakfast?",french:"Que manges-tu au petit-déjeuner ?"},{prompt:"Are you happy today?",french:"Es-tu contente aujourd'hui ?"}]}
 };
 
 function conversationReply(themeKey, index, transcript) {
@@ -419,10 +449,12 @@ function shuffle(list) {
   return copy;
 }
 
-function startGame(mode) {
-  const selected = shuffle(ALL_WORDS).slice(0, 10);
+function startGame(mode, topic) {
+  const pool = topic && LESSONS[topic] ? LESSONS[topic].words : ALL_WORDS;
+  const selected = shuffle(pool).slice(0, Math.min(6, pool.length));
   game = {
     mode: mode,
+    topic: topic || null,
     index: 0,
     correct: 0,
     answered: false,
@@ -457,7 +489,7 @@ function validateAnswer() {
 
 function nextQuestion() {
   if (!game) return;
-  if (game.index >= 9) {
+  if (game.index >= game.questions.length - 1) {
     game.complete = true;
     state.diamonds += game.correct;
     state.sessions += 1;
@@ -508,7 +540,7 @@ function handleAction(action, target) {
     }
   }
   if (action === "complete-lesson") completeLesson(target.dataset.topic);
-  if (action === "start-game") startGame(target.dataset.mode);
+  if (action === "start-game") startGame(target.dataset.mode, target.dataset.topic);
   if (action === "conversation-menu") { if(speechRecognition) speechRecognition.abort(); conversation=null; activeView="conversation-menu"; render(); }
   if (action === "start-conversation") startConversation(target.dataset.theme);
   if (action === "record-conversation") listenToConversation();
