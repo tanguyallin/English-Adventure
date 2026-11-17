@@ -294,11 +294,31 @@ function renderPlay() {
     ["numbers","🔢","Les chiffres malins","quiz"],["fruits","🍓","Le panier de fruits","listen"],
     ["family","👨‍👩‍👧","La famille en anglais","quiz"],["body","🧍","Le corps en action","listen"],
     ["food","🥪","Le menu gourmand","quiz"],["school","🎒","Le cartable magique","listen"],
-    ["weather","🌦️","La météo rigolote","quiz"],["clothes","👕","Le dressing anglais","listen"]
+    ["weather","🌦️","La météo rigolote","quiz"],["clothes","👕","Le dressing anglais","listen"],
+    ["toys","🧸","Le coffre à jouets","quiz"],
+    ["transport","🚗","Le voyage des mots","listen"],
+    ["rooms","🏡","La maison mystère","quiz"],
+    ["furniture","🪑","Qui suis-je ? Les meubles","listen"],
+    ["nature","🌳","L’exploratrice de la nature","quiz"],
+    ["ocean","🐬","Plongée sous-marine","listen"],
+    ["farm","🚜","La ferme en folie","quiz"],
+    ["insects","🦋","Les petites bêtes","listen"],
+    ["jobs","👩‍🚒","Qui fait ce métier ?","quiz"],
+    ["sports","🏅","Le défi des sportifs","listen"],
+    ["actions","🤸","Mime et devine","quiz"],
+    ["feelings","😊","Le miroir des émotions","listen"],
+    ["weekdays","📅","Le calendrier magique","quiz"],
+    ["months","🗓️","Les mois de l’année","listen"],
+    ["seasons","🍂","Les quatre saisons","quiz"],
+    ["shapes","🔺","La chasse aux formes","listen"],
+    ["places","🏙️","La balade en ville","quiz"],
+    ["kitchen","🍴","À la bonne place","listen"],
+    ["breakfast","🥣","Le petit-déjeuner parfait","quiz"],
+    ["opposites","↔️","Le jeu des contraires","listen"]
   ];
-  return '<section class="page-intro"><span class="eyebrow">À TOI DE JOUER</span><h1>10 petits jeux 🧩</h1><p>Choisis ton défi : chaque jeu te fait réviser un thème différent !</p></section>' +
+  return '<section class="page-intro"><span class="eyebrow">À TOI DE JOUER</span><h1>30 petits jeux 🧩</h1><p>Choisis ton défi : chaque jeu te fait réviser un thème différent !</p></section>' +
     games.map(function(item){return '<button class="game-mode-card '+(item[3]==="listen"?"listen-mode":"quiz-mode")+'" data-action="start-game" data-mode="'+item[3]+'" data-topic="'+item[0]+'"><span class="mode-icon">'+item[1]+'</span><span><strong>'+item[2]+'</strong><small>'+(item[3]==="listen"?"Écoute le mot et trouve la bonne réponse.":"Trouve le mot anglais correspondant.")+'</small></span><span class="mode-arrow">→</span></button>';}).join("") +
-    '<button class="game-mode-card conversation-mode" data-action="conversation-menu"><span class="mode-icon">💬</span><span><strong>Les conversations</strong><small>Parle avec le renard dans 10 situations différentes.</small></span><span class="mode-arrow">→</span></button>' +
+    '<button class="game-mode-card conversation-mode" data-action="conversation-menu"><span class="mode-icon">💬</span><span><strong>Les conversations</strong><small>Parle avec le renard dans 30 situations différentes.</small></span><span class="mode-arrow">→</span></button>' +
     '<div class="tip-card">💎 <span>Chaque bonne réponse te rapporte un diamant. Amuse-toi bien !</span></div>' +
     '<div class="best-score">🏅 Ton meilleur score : <strong>' + state.bestScore + '/6</strong></div>';
 }
