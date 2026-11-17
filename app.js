@@ -73,7 +73,7 @@ function escapeHtml(value) {
   });
 }
 
-function speak(word) {
+function speakWithLanguage(text, language, rate, cancelCurrent) {
   if (!state.soundEnabled) {
     showToast("Le son est désactivé dans l'espace parents.");
     return;
@@ -82,13 +82,25 @@ function speak(word) {
     showToast("La lecture audio n'est pas disponible sur cet appareil.");
     return;
   }
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(word);
-  utterance.lang = "en-GB";
-  utterance.rate = 0.78;
-  utterance.pitch = 1.08;
+  if (cancelCurrent) window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = language;
+  utterance.rate = rate;
+  utterance.pitch = language === "fr-FR" ? 1 : 1.08;
   utterance.volume = 1;
   window.speechSynthesis.speak(utterance);
+}
+
+function speak(word) {
+  speakWithLanguage(word, "en-GB", 0.78, true);
+}
+
+function speakFrench(text) {
+  speakWithLanguage(text, "fr-FR", 0.9, true);
+}
+
+function speakEnglishAfterCurrent(word) {
+  speakWithLanguage(word, "en-GB", 0.78, false);
 }
 
 function showToast(message) {
@@ -121,7 +133,7 @@ function renderHome() {
     '<div class="fox-mascot" aria-label="Petit renard">🦊<span>✨</span></div>' +
     '</section>' +
     '<section class="quick-stats">' +
-    '<div class="stat-card"><span class="stat-icon">⭐</span><strong>' + state.stars + '</strong><small>étoiles</small></div>' +
+    '<div class="stat-card"><span class="stat-icon">💎</span><strong>' + state.stars + '</strong><small>diamants</small></div>' +
     '<div class="stat-card"><span class="stat-icon">📚</span><strong>' + state.completedLessons.length + '/2</strong><small>leçons terminées</small></div>' +
     '<div class="stat-card"><span class="stat-icon">🗣️</span><strong>' + state.wordsLearned.length + '</strong><small>mots découverts</small></div>' +
     '</section>' +
@@ -130,7 +142,7 @@ function renderHome() {
     '<button class="activity-card peach" data-view="learn"><span>📖</span><strong>Apprendre</strong><small>Découvre les mots</small></button>' +
     '<button class="activity-card lavender" data-view="play"><span>🧩</span><strong>Jouer</strong><small>Teste tes connaissances</small></button>' +
     '<button class="activity-card mint" data-view="listen"><span>🎧</span><strong>Écouter</strong><small>Reconnais les sons</small></button>' +
-    '<button class="activity-card butter" data-view="rewards"><span>🏆</span><strong>Mes étoiles</strong><small>Regarde tes progrès</small></button>' +
+    '<button class="activity-card butter" data-view="rewards"><span>🏆</span><strong>Mes diamants</strong><small>Regarde tes progrès</small></button>' +
     '</div></section>' +
     '<section class="progress-panel"><div class="progress-title"><strong>Mon aventure</strong><span>' + progressPercent() + '%</span></div>' +
     '<div class="progress-track"><span style="width:' + progressPercent() + '%"></span></div>' +
@@ -160,14 +172,14 @@ function renderLesson() {
       return '<button class="word-card" data-action="speak" data-word="' + item.word + '"><span class="word-emoji">' + item.emoji + '</span><strong>' + item.word + '</strong><small>' + item.fr + '</small><span class="listen-hint">🔊 Écouter</span>' + (learned ? '<span class="learned-check">✓</span>' : '') + '</button>';
     }).join("") + '</div>' +
     '<div class="tip-card">💡 <span>Astuce : touche chaque carte pour entendre le mot en anglais. Essaie de le répéter à voix haute !</span></div>' +
-    '<button class="primary-button full-button" data-action="complete-lesson" data-topic="' + activeLesson + '">' + (done ? "Leçon déjà terminée ✓" : "J'ai terminé cette leçon ! ⭐") + '</button>';
+    '<button class="primary-button full-button" data-action="complete-lesson" data-topic="' + activeLesson + '">' + (done ? "Leçon déjà terminée ✓" : "J'ai terminé cette leçon ! 💎") + '</button>';
 }
 
 function renderPlay() {
-  return '<section class="page-intro"><span class="eyebrow">À TOI DE JOUER</span><h1>Les petits jeux 🧩</h1><p>10 questions pour gagner des étoiles. Tu peux recommencer autant de fois que tu veux !</p></section>' +
+  return '<section class="page-intro"><span class="eyebrow">À TOI DE JOUER</span><h1>Les petits jeux 🧩</h1><p>10 questions pour gagner des diamants. Tu peux recommencer autant de fois que tu veux !</p></section>' +
     '<button class="game-mode-card quiz-mode" data-action="start-game" data-mode="quiz"><span class="mode-icon">🧠</span><span><strong>Le quiz des mots</strong><small>Lis le mot français et trouve son nom anglais.</small></span><span class="mode-arrow">→</span></button>' +
     '<button class="game-mode-card listen-mode" data-action="start-game" data-mode="listen"><span class="mode-icon">🎧</span><span><strong>L\'oreille magique</strong><small>Écoute le mot anglais et choisis la bonne image.</small></span><span class="mode-arrow">→</span></button>' +
-    '<div class="tip-card">⭐ <span>Une bonne réponse = une étoile à la fin du jeu. Il y a 10 questions !</span></div>' +
+    '<div class="tip-card">💎 <span>Une bonne réponse = un diamant à la fin du jeu. Il y a 10 questions !</span></div>' +
     '<div class="best-score">🏅 Ton meilleur score : <strong>' + state.bestScore + '/10</strong></div>';
 }
 
@@ -183,13 +195,13 @@ function wordCard(item) {
 
 function renderRewards() {
   const milestones = [
-    { count: 1, icon: "🌟", title: "Première étoile", note: "Tu as commencé ton aventure !" },
-    { count: 5, icon: "🦋", title: "Petite exploratrice", note: "5 étoiles gagnées" },
-    { count: 10, icon: "🦄", title: "Super championne", note: "10 étoiles gagnées" },
-    { count: 20, icon: "👑", title: "Reine de l'anglais", note: "20 étoiles gagnées" }
+    { count: 1, icon: "💎", title: "Premier diamant", note: "Tu as commencé ton aventure !" },
+    { count: 5, icon: "🦋", title: "Petite exploratrice", note: "5 diamants gagnés" },
+    { count: 10, icon: "🦄", title: "Super championne", note: "10 diamants gagnés" },
+    { count: 20, icon: "👑", title: "Reine de l'anglais", note: "20 diamants gagnés" }
   ];
   return '<section class="page-intro"><span class="eyebrow">BRAVO À TOI !</span><h1>Mes récompenses 🏆</h1><p>Chaque bonne réponse te rapproche d\'une nouvelle récompense.</p></section>' +
-    '<div class="star-total"><span>⭐</span><strong>' + state.stars + '</strong><small>étoiles gagnées</small></div>' +
+    '<div class="diamond-total"><span>💎</span><strong>' + state.stars + '</strong><small>diamants gagnés</small></div>' +
     '<div class="reward-list">' + milestones.map(function (item) {
       const unlocked = state.stars >= item.count;
       return '<div class="reward-card ' + (unlocked ? "unlocked" : "locked") + '"><span>' + item.icon + '</span><div><strong>' + item.title + '</strong><small>' + item.note + '</small></div><b>' + (unlocked ? "✓" : "🔒") + '</b></div>';
@@ -206,28 +218,45 @@ function renderParents() {
     '<p class="parent-disclaimer">Le code parent évite les ouvertures accidentelles, mais il ne remplace pas un véritable verrouillage de sécurité.</p>';
 }
 
+function gameInstruction(question) {
+  return game.mode === "quiz"
+    ? 'Comment dit-on « ' + question.item.fr + ' » en anglais ?'
+    : "Écoute le mot en anglais, puis choisis l'image qui correspond.";
+}
+
+function readGameInstruction() {
+  if (!game || game.complete) return;
+  const question = game.questions[game.index];
+  speakFrench(gameInstruction(question));
+  if (game.mode === "listen") speakEnglishAfterCurrent(question.item.word);
+}
+
 function renderGame() {
   if (!game) return renderPlay();
   if (game.complete) {
-    const message = game.correct === 10 ? "Incroyable ! Un sans-faute ! 🎉" : game.correct >= 7 ? "Super travail ! Tu progresses très bien ! 🌟" : "Bravo d'avoir essayé ! On recommence quand tu veux. 💛";
-    return '<section class="result-card"><div class="result-confetti">🎉 ⭐ 🎈</div><span class="eyebrow">JEU TERMINÉ</span><h1>' + message + '</h1><div class="score-circle"><strong>' + game.correct + '</strong><small>/ 10</small></div><p>Tu gagnes <strong>' + game.correct + ' étoiles</strong> !</p><button class="primary-button full-button" data-action="start-game" data-mode="' + game.mode + '">Rejouer 🔁</button><button class="secondary-button full-button" data-view="play">Retour aux jeux</button></section>';
+    const message = game.correct === 10 ? "Incroyable ! Un sans-faute ! 🎉" : game.correct >= 7 ? "Super travail ! Tu progresses très bien ! 💎" : "Bravo d'avoir essayé ! On recommence quand tu veux. 💛";
+    return '<section class="result-card"><div class="result-confetti">🎉 💎 🎈</div><span class="eyebrow">JEU TERMINÉ</span><h1>' + message + '</h1><div class="score-circle"><strong>' + game.correct + '</strong><small>/ 10</small></div><p>Tu gagnes <strong>' + game.correct + ' diamants</strong> !</p><button class="primary-button full-button" data-action="start-game" data-mode="' + game.mode + '">Rejouer 🔁</button><button class="secondary-button full-button" data-view="play">Retour aux jeux</button></section>';
   }
   const question = game.questions[game.index];
   const progress = Math.round((game.index / game.questions.length) * 100);
-  const prompt = game.mode === "quiz" ? 'Comment dit-on « ' + question.item.fr + ' » en anglais ?' : 'Écoute le mot, puis choisis la bonne image.';
+  const prompt = gameInstruction(question);
   return '<button class="back-button" data-view="play">← Quitter le jeu</button>' +
-    '<section class="game-panel"><div class="game-progress-row"><span>Question ' + (game.index + 1) + ' sur 10</span><span>⭐ ' + game.correct + '</span></div>' +
+    '<section class="game-panel"><div class="game-progress-row"><span>Question ' + (game.index + 1) + ' sur 10</span><span>💎 ' + game.correct + '</span></div>' +
     '<div class="progress-track"><span style="width:' + progress + '%"></span></div>' +
+    '<button class="instruction-replay" data-action="replay-instruction">🔊 Réécouter la consigne</button>' +
     '<h1>' + prompt + '</h1>' +
-    (game.mode === "listen" ? '<button class="listen-prompt" data-action="replay-word">🔊 Écouter encore</button>' : '<div class="question-emoji">' + question.item.emoji + '</div>') +
+    (game.mode === "listen" ? '<button class="listen-prompt" data-action="replay-word">🔊 Réécouter le mot anglais</button>' : '<div class="question-emoji">' + question.item.emoji + '</div>') +
     '<div class="answer-grid">' + question.options.map(function (option, index) {
       let cls = "answer-option";
       if (game.answered && option.word === question.item.word) cls += " answer-correct";
       else if (game.answered && game.selected === index) cls += " answer-wrong";
+      else if (!game.answered && game.selected === index) cls += " answer-selected";
       return '<button class="' + cls + '" data-action="answer" data-answer="' + index + '"' + (game.answered ? " disabled" : "") + '>' +
         (game.mode === "quiz" ? '<strong>' + option.word + '</strong>' : '<span class="answer-emoji">' + option.emoji + '</span><strong>' + option.fr + '</strong>') + '</button>';
     }).join("") + '</div>' +
-    (game.answered ? '<div class="answer-feedback ' + (game.lastCorrect ? "good" : "try-again") + '">' + (game.lastCorrect ? "Bravo, bonne réponse ! ⭐" : "Bien essayé ! La bonne réponse était " + question.item.word + ".") + '</div><button class="primary-button full-button" data-action="next-question">' + (game.index === 9 ? "Voir mon résultat" : "Question suivante →") + '</button>' : '') +
+    (game.answered
+      ? '<div class="answer-feedback ' + (game.lastCorrect ? "good" : "try-again") + '">' + (game.lastCorrect ? "Bravo, bonne réponse ! 💎" : "Bien essayé ! La bonne réponse était " + question.item.word + ".") + '</div><button class="primary-button full-button" data-action="next-question">' + (game.index === 9 ? "Voir mon résultat" : "Question suivante →") + '</button>'
+      : '<button class="primary-button full-button validate-button" data-action="validate-answer"' + (game.selected < 0 ? " disabled" : "") + '>Valider ma réponse ✓</button>') +
     '</section>';
 }
 
@@ -249,7 +278,7 @@ function renderNav() {
     ["learn", "📖", "Apprendre"],
     ["play", "🧩", "Jouer"],
     ["listen", "🎧", "Écouter"],
-    ["rewards", "⭐", "Étoiles"]
+    ["rewards", "💎", "Diamants"]
   ];
   return '<nav class="bottom-nav" aria-label="Navigation principale">' + items.map(function (item) {
     return '<button class="nav-item ' + (activeView === item[0] || (activeView === "lesson" && item[0] === "learn") || (activeView === "game" && item[0] === "play") ? "active" : "") + '" data-view="' + item[0] + '"><span>' + item[1] + '</span><small>' + item[2] + '</small></button>';
@@ -257,7 +286,7 @@ function renderNav() {
 }
 
 function render() {
-  app.innerHTML = '<header class="topbar"><button class="brand" data-view="home"><span class="brand-icon">🦊</span><span>English <b>Adventure</b></span></button><span class="top-stars">⭐ ' + state.stars + '</span></header>' +
+  app.innerHTML = '<header class="topbar"><button class="brand" data-view="home"><span class="brand-icon">🦊</span><span>English <b>Adventure</b></span></button><span class="top-diamonds">💎 ' + state.stars + '</span></header>' +
     '<main class="main-content">' + renderView() + '</main>' + renderNav();
 }
 
@@ -288,15 +317,22 @@ function startGame(mode) {
   };
   activeView = "game";
   render();
-  if (mode === "listen") speak(game.questions[0].item.word);
+  readGameInstruction();
 }
 
-function answerQuestion(index) {
-  if (!game || game.answered) return;
-  const question = game.questions[game.index];
+function selectAnswer(index) {
+  if (!game || game.answered || index < 0 || index >= game.questions[game.index].options.length) return;
   game.selected = index;
+  const selectedOption = game.questions[game.index].options[index];
+  render();
+  speak(selectedOption.word);
+}
+
+function validateAnswer() {
+  if (!game || game.answered || game.selected < 0) return;
+  const question = game.questions[game.index];
   game.answered = true;
-  game.lastCorrect = question.options[index].word === question.item.word;
+  game.lastCorrect = question.options[game.selected].word === question.item.word;
   if (game.lastCorrect) game.correct += 1;
   render();
 }
@@ -316,7 +352,7 @@ function nextQuestion() {
   game.answered = false;
   game.selected = -1;
   render();
-  if (game.mode === "listen") speak(game.questions[game.index].item.word);
+  readGameInstruction();
 }
 
 function completeLesson(key) {
@@ -329,7 +365,7 @@ function completeLesson(key) {
     if (!state.wordsLearned.includes(item.word)) state.wordsLearned.push(item.word);
   });
   saveState();
-  showToast(firstCompletion ? "Leçon terminée ! Tu gagnes 2 étoiles ⭐" : "Leçon déjà terminée. Bravo pour la révision !");
+  showToast(firstCompletion ? "Leçon terminée ! Tu gagnes 2 diamants 💎" : "Leçon déjà terminée. Bravo pour la révision !");
   render();
 }
 
@@ -355,7 +391,9 @@ function handleAction(action, target) {
   }
   if (action === "complete-lesson") completeLesson(target.dataset.topic);
   if (action === "start-game") startGame(target.dataset.mode);
-  if (action === "answer") answerQuestion(Number(target.dataset.answer));
+  if (action === "answer") selectAnswer(Number(target.dataset.answer));
+  if (action === "validate-answer") validateAnswer();
+  if (action === "replay-instruction" && game) speakFrench(gameInstruction(game.questions[game.index]));
   if (action === "next-question") nextQuestion();
   if (action === "replay-word" && game) speak(game.questions[game.index].item.word);
   if (action === "open-parents") openParents();
