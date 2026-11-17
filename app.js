@@ -103,10 +103,27 @@ function escapeHtml(value) {
 }
 
 let availableSpeechVoices = [];
+let preferredEnglishVoice = null;
+let preferredFrenchVoice = null;
 
 function refreshSpeechVoices() {
   if (!("speechSynthesis" in window)) return;
   availableSpeechVoices = window.speechSynthesis.getVoices() || [];
+  function chooseVoice(language) {
+    const prefix = language.toLowerCase().split("-")[0];
+    const matches = availableSpeechVoices.filter(function (voice) {
+      return voice.lang && voice.lang.toLowerCase().startsWith(prefix);
+    });
+    return matches.find(function (voice) {
+      return voice.lang.toLowerCase() === language.toLowerCase() && voice.localService;
+    }) || matches.find(function (voice) {
+      return voice.localService;
+    }) || matches.find(function (voice) {
+      return voice.lang.toLowerCase() === language.toLowerCase();
+    }) || matches[0] || null;
+  }
+  preferredEnglishVoice = chooseVoice("en-GB") || chooseVoice("en-US");
+  preferredFrenchVoice = chooseVoice("fr-FR") || chooseVoice("fr-CA");
 }
 
 function makeSpeechUtterance(text, language, rate) {
@@ -117,18 +134,13 @@ function makeSpeechUtterance(text, language, rate) {
   utterance.volume = 1;
 
   // Prefer an already-installed voice to avoid slow online voice loading.
-  const languagePrefix = language.toLowerCase().split("-")[0];
-  const matchingVoices = availableSpeechVoices.filter(function (voice) {
-    return voice.lang && voice.lang.toLowerCase().startsWith(languagePrefix);
-  });
-  const voice = matchingVoices.find(function (item) {
-    return item.lang.toLowerCase() === language.toLowerCase() && item.localService;
-  }) || matchingVoices.find(function (item) {
-    return item.lang.toLowerCase() === language.toLowerCase();
-  }) || matchingVoices.find(function (item) {
-    return item.localService;
-  }) || matchingVoices[0];
-  if (voice) utterance.voice = voice;
+  const voice = language.toLowerCase().startsWith("en")
+    ? preferredEnglishVoice
+    : preferredFrenchVoice;
+  if (voice) {
+    utterance.voice = voice;
+    utterance.lang = voice.lang;
+  }
   return utterance;
 }
 
@@ -147,7 +159,10 @@ function speakWithLanguage(text, language, rate, cancelCurrent) {
     return;
   }
   refreshSpeechVoices();
-  if (cancelCurrent) window.speechSynthesis.cancel();
+  // Avoid cancel() when the speech queue is already idle: Android can add startup latency.
+  if (cancelCurrent && (window.speechSynthesis.speaking || window.speechSynthesis.pending)) {
+    window.speechSynthesis.cancel();
+  }
   const utterance = makeSpeechUtterance(text, language, rate);
   window.speechSynthesis.speak(utterance);
 }
