@@ -7,7 +7,7 @@ Une petite application ludique pour découvrir l'anglais sur une tablette Androi
 - Leçons illustrées sur les couleurs et les animaux.
 - Prononciation des mots en anglais grâce à la voix du navigateur.
 - Deux jeux de 10 questions : quiz de vocabulaire et reconnaissance à l'écoute.
-- Étoiles, récompenses et suivi de progression.
+- Diamants, récompenses et suivi de progression.
 - Sauvegarde locale sur la tablette.
 - Installation comme application (PWA) et mise en cache pour une utilisation hors connexion après le premier chargement.
 - Espace parents avec code d'accès et réglage du son.
