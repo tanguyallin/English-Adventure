@@ -1,10 +1,17 @@
 function speak(word){
 
-   const speech = new SpeechSynthesisUtterance(word);
+    speechSynthesis.cancel();
 
-   speech.lang = "en-US";
+    const speech =
+        new SpeechSynthesisUtterance(word);
 
-   speech.rate = 0.9;
+    speech.lang = "en-US";
 
-   speechSynthesis.speak(speech);
+    speech.rate = 0.85;
+
+    speech.pitch = 1;
+
+    speech.volume = 1;
+
+    speechSynthesis.speak(speech);
 }
