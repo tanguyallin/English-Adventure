@@ -265,14 +265,14 @@ function readGameInstruction() {
 function renderGame() {
   if (!game) return renderPlay();
   if (game.complete) {
-    const message = game.correct === 10 ? "Incroyable ! Un sans-faute ! 🎉" : game.correct >= 7 ? "Super travail ! Tu progresses très bien ! 💎" : "Bravo d'avoir essayé ! On recommence quand tu veux. 💛";
-    return '<section class="result-card"><div class="result-confetti">🎉 💎 🎈</div><span class="eyebrow">JEU TERMINÉ</span><h1>' + message + '</h1><div class="score-circle"><strong>' + game.correct + '</strong><small>/ 10</small></div><p>Tu gagnes <strong>' + game.correct + ' diamants</strong> !</p><button class="primary-button full-button" data-action="start-game" data-mode="' + game.mode + '" data-topic="' + (game.topic || '') + '">Rejouer 🔁</button><button class="secondary-button full-button" data-view="play">Retour aux jeux</button></section>';
+    const message = game.correct === game.questions.length ? "Incroyable ! Un sans-faute ! 🎉" : game.correct >= Math.ceil(game.questions.length * 0.7) ? "Super travail ! Tu progresses très bien ! 💎" : "Bravo d'avoir essayé ! On recommence quand tu veux. 💛";
+    return '<section class="result-card"><div class="result-confetti">🎉 💎 🎈</div><span class="eyebrow">JEU TERMINÉ</span><h1>' + message + '</h1><div class="score-circle"><strong>' + game.correct + '</strong><small>/ ' + game.questions.length + '</small></div><p>Tu gagnes <strong>' + game.correct + ' diamants</strong> !</p><button class="primary-button full-button" data-action="start-game" data-mode="' + game.mode + '" data-topic="' + (game.topic || '') + '">Rejouer 🔁</button><button class="secondary-button full-button" data-view="play">Retour aux jeux</button></section>';
   }
   const question = game.questions[game.index];
   const progress = Math.round((game.index / game.questions.length) * 100);
   const prompt = gameInstruction(question);
   return '<button class="back-button" data-view="play">← Quitter le jeu</button>' +
-    '<section class="game-panel"><div class="game-progress-row"><span>Question ' + (game.index + 1) + ' sur 10</span><span>💎 ' + game.correct + '</span></div>' +
+    '<section class="game-panel"><div class="game-progress-row"><span>Question ' + (game.index + 1) + ' sur ' + game.questions.length + '</span><span>💎 ' + game.correct + '</span></div>' +
     '<div class="progress-track"><span style="width:' + progress + '%"></span></div>' +
     '<button class="instruction-replay" data-action="replay-instruction">🔊 Réécouter la consigne</button>' +
     '<h1>' + prompt + '</h1>' +
