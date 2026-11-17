@@ -320,7 +320,8 @@ function nextQuestion() {
 }
 
 function completeLesson(key) {
-  if (!state.completedLessons.includes(key)) {
+  const firstCompletion = !state.completedLessons.includes(key);
+  if (firstCompletion) {
     state.completedLessons.push(key);
     state.stars += 2;
   }
@@ -328,7 +329,7 @@ function completeLesson(key) {
     if (!state.wordsLearned.includes(item.word)) state.wordsLearned.push(item.word);
   });
   saveState();
-  showToast("Leçon terminée ! Tu gagnes 2 étoiles ⭐");
+  showToast(firstCompletion ? "Leçon terminée ! Tu gagnes 2 étoiles ⭐" : "Leçon déjà terminée. Bravo pour la révision !");
   render();
 }
 
