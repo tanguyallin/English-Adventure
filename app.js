@@ -297,23 +297,23 @@ function renderPlay() {
     ["weather","🌦️","La météo rigolote","quiz"],["clothes","👕","Le dressing anglais","listen"],
     ["toys","🧸","Le coffre à jouets","quiz"],
     ["transport","🚗","Le voyage des mots","listen"],
-    ["rooms","🏡","La maison mystère","quiz"],
+    ["rooms","🏡","La maison mystère","reverse"],
     ["furniture","🪑","Qui suis-je ? Les meubles","listen"],
     ["nature","🌳","L’exploratrice de la nature","quiz"],
     ["ocean","🐬","Plongée sous-marine","listen"],
-    ["farm","🚜","La ferme en folie","quiz"],
+    ["farm","🚜","La ferme en folie","reverse"],
     ["insects","🦋","Les petites bêtes","listen"],
-    ["jobs","👩‍🚒","Qui fait ce métier ?","quiz"],
+    ["jobs","👩‍🚒","Qui fait ce métier ?","reverse"],
     ["sports","🏅","Le défi des sportifs","listen"],
     ["actions","🤸","Mime et devine","quiz"],
     ["feelings","😊","Le miroir des émotions","listen"],
-    ["weekdays","📅","Le calendrier magique","quiz"],
+    ["weekdays","📅","Le calendrier magique","reverse"],
     ["months","🗓️","Les mois de l’année","listen"],
     ["seasons","🍂","Les quatre saisons","quiz"],
     ["shapes","🔺","La chasse aux formes","listen"],
-    ["places","🏙️","La balade en ville","quiz"],
+    ["places","🏙️","La balade en ville","reverse"],
     ["kitchen","🍴","À la bonne place","listen"],
-    ["breakfast","🥣","Le petit-déjeuner parfait","quiz"],
+    ["breakfast","🥣","Le petit-déjeuner parfait","reverse"],
     ["opposites","↔️","Le jeu des contraires","listen"]
   ];
   return '<section class="page-intro"><span class="eyebrow">À TOI DE JOUER</span><h1>30 petits jeux 🧩</h1><p>Choisis ton défi : chaque jeu te fait réviser un thème différent !</p></section>' +
@@ -357,9 +357,9 @@ function renderParents() {
 }
 
 function gameInstruction(question) {
-  return game.mode === "quiz"
-    ? 'Comment dit-on « ' + question.item.fr + ' » en anglais ?'
-    : "Écoute le mot en anglais, puis choisis l'image qui correspond.";
+  if (game.mode === "quiz") return 'Comment dit-on « ' + question.item.fr + ' » en anglais ?';
+  if (game.mode === "reverse") return 'Que signifie « ' + question.item.word + ' » en français ?';
+  return "Écoute le mot en anglais, puis choisis la bonne image.";
 }
 
 function readGameInstruction() {
