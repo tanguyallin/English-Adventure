@@ -388,6 +388,10 @@ function listenToConversation() {
           conversation.index++;
           conversation.transcript=""; conversation.reply="";
           render();
+          requestAnimationFrame(function(){
+            const replyButton=document.querySelector(".conversation-panel .mic-button");
+            if(replyButton) replyButton.scrollIntoView({behavior:"smooth",block:"center"});
+          });
           speak(CONVERSATION_THEMES[conversation.theme].turns[conversation.index].prompt);
         }
       };
