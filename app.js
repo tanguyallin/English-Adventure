@@ -238,8 +238,15 @@ function showToast(message) {
   }, 2600);
 }
 
+function completedLessonCount() {
+  const lessonKeys = Object.keys(LESSONS);
+  return new Set(state.completedLessons.filter(function (key) {
+    return lessonKeys.includes(key);
+  })).size;
+}
+
 function progressPercent() {
-  return Math.min(100, Math.round((state.completedLessons.length / Object.keys(LESSONS).length) * 100));
+  return Math.round((completedLessonCount() / Object.keys(LESSONS).length) * 100);
 }
 
 function renderHome() {
@@ -258,12 +265,12 @@ function renderHome() {
     '</section>' +
     '<section class="quick-stats">' +
     '<div class="stat-card"><span class="stat-icon">💎</span><strong>' + state.diamonds + '</strong><small>diamants</small></div>' +
-    '<div class="stat-card"><span class="stat-icon">📚</span><strong>' + state.completedLessons.length + '/' + Object.keys(LESSONS).length + '</strong><small>leçons terminées</small></div>' +
+    '<div class="stat-card"><span class="stat-icon">📚</span><strong>' + completedLessonCount() + '/' + Object.keys(LESSONS).length + '</strong><small>leçons terminées</small></div>' +
     '<div class="stat-card"><span class="stat-icon">🗣️</span><strong>' + state.wordsLearned.length + '</strong><small>mots découverts</small></div>' +
     '</section>' +
-    '<section class="progress-panel"><div class="progress-title"><strong>Mon aventure</strong><span>' + progressPercent() + '%</span></div>' +
+    '<section class="progress-panel"><div class="progress-title"><strong>Mes leçons</strong><span>' + progressPercent() + '%</span></div>' +
     '<div class="progress-track"><span style="width:' + progressPercent() + '%"></span></div>' +
-    '<p>Chaque mot appris te fait grandir. Bravo ! 💛</p></section>' +
+    '<p>' + completedLessonCount() + ' leçons terminées sur ' + Object.keys(LESSONS).length + '. Continue comme ça ! 💛</p></section>' +
     (deferredInstallPrompt ? '<button class="install-button" data-action="install">📲 Installer sur cette tablette</button>' : '');
 }
 function renderLearn() {
