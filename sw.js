@@ -1,4 +1,4 @@
-const CACHE_NAME = "english-adventure-v18";
+const CACHE_NAME = "english-adventure-v19";
 const APP_FILES = [
   "./",
   "./index.html",
